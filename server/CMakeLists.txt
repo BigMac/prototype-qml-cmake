@@ -9,6 +9,7 @@ set(SERVER_SRCS
 )
 
 add_executable(server ${SERVER_SRCS})
+link_directories ( ${Boost_LIBRARY_DIRS} )
 target_link_libraries(server
 	${Boost_SYSTEM_LIBRARY}
 	${CMAKE_THREAD_LIBS_INIT}
