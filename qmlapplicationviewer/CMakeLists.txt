@@ -22,3 +22,5 @@ add_executable(main ${SRCS} ${MOC_SRCS})
 target_link_libraries(main
 		${QT_LIBRARIES}
 )
+file(COPY main.qml DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+
