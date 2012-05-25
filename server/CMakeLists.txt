@@ -4,6 +4,7 @@ find_package(Threads)
 include_directories(${Boost_INCLUDE_DIRS})
 
 set(SERVER_SRCS
+		Connection.cpp
 		SimpleServer.cpp
 		main.cpp
 )

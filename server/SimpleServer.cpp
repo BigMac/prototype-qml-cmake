@@ -1,23 +1,30 @@
 #include "SimpleServer.h"
-#include <boost/asio.hpp>
-#include <boost/lexical_cast.hpp>
 #include <string>
+#include "Connection.h"
 
-SimpleServer::SimpleServer()
-{
-}
+SimpleServer::SimpleServer() : m_acceptor(m_ioService, tcp::endpoint(tcp::v4(), 6666))
+{}
 
 void SimpleServer::startListening()
 {
-    typedef boost::asio::ip::tcp tcp;
-    boost::asio::io_service io_service;
-    tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), 6666));
+    startAccept();
+    m_ioService.run();
+}
 
-    for(;;)
-    {
-        tcp::socket socket(io_service);
-        acceptor.accept(socket);
-        std::string message("message 42");
-        boost::asio::write(socket, boost::asio::buffer(message));
-    }
+void SimpleServer::startAccept()
+{
+    auto newConnection = std::make_shared<Connection>(m_ioService);
+
+    m_acceptor.async_accept(newConnection->getSocket(),
+                            [&](const boost::system::error_code& error){
+                            handleAccept(newConnection,
+                                         error); });
+}
+
+void SimpleServer::handleAccept(std::shared_ptr<Connection> newConnection,
+                                const boost::system::error_code& error)
+{
+    if(!error)
+        newConnection->start();
+    startAccept();
 }
