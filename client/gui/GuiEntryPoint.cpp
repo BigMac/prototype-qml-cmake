@@ -1,10 +1,12 @@
 #include "GuiEntryPoint.h"
 #include "InventoryGUI.h"
 #include "core/InventoryCore.h"
+#include "LocalNetworkAccessManager.h"
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
 #include <QDeclarativeContext>
 #include <QDeclarativeView>
+#include <QtNetwork/QNetworkAccessManager>
 #include <QApplication>
 
 GuiEntryPoint::GuiEntryPoint()
@@ -18,13 +20,14 @@ int GuiEntryPoint::exec(int argc, char *argv[], std::shared_ptr<InventoryCore> c
 
     QApplication app(argc, argv);
     QDeclarativeView view;
-    view.setSource(QUrl::fromLocalFile("gui/qml/main.qml"));
+    view.engine()->setNetworkAccessManagerFactory(new LocalNetworkAccessManagerFactory());
+    view.setSource(QUrl("dupa://gui/qml/main.qml"));
     view.setVisible(true);
     view.connect(view.engine(), SIGNAL(quit()), SLOT(close()));
 
-    QDeclarativeView view_sub(&view);
-    view_sub.setSource(QUrl::fromLocalFile("gui/qml/sub.qml"));
+    /*QDeclarativeView view_sub(&view);
+    view_sub.setSource(QUrl::fromLocalFile("http://gui/qml/sub.qml"));
     view_sub.setVisible(true);
-    view_sub.connect(view_sub.engine(), SIGNAL(quit()), SLOT(close()));
+    view_sub.connect(view_sub.engine(), SIGNAL(quit()), SLOT(close()));*/
     return app.exec();
 }

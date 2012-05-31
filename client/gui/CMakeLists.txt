@@ -8,13 +8,12 @@ include_directories(
 	.. #this is only here so that GuiEntryPoint can see core/InventoryCore
 )
 
-set(SRCS
-	InventoryGUI.cpp
-	GuiEntryPoint.cpp
-)
+file(GLOB SRCS *.cpp)
+file(GLOB HDRS *.h)
 
 set(MOC_HDRS
 	InventoryGUI.h
+	FileNetworkReply.h
 )
 
 set(QML_DIR
@@ -28,6 +27,7 @@ qt4_wrap_cpp(MOC_SRCS ${MOC_HDRS})
 add_definitions(${QT_DEFINITIONS})
 add_library(libgui
 	${SRCS}
+	${HDRS}
 	${MOC_SRCS}
 	${QML_FILES} #This is so they're visible in a generated project
 )
