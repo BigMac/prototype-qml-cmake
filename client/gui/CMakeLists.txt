@@ -17,7 +17,11 @@ set(MOC_HDRS
 	InventoryGUI.h
 )
 
-file(GLOB QML_FILES *.qml)
+set(QML_DIR
+	qml
+)
+
+file(GLOB QML_FILES ${QML_DIR}/*.qml)
 
 qt4_wrap_cpp(MOC_SRCS ${MOC_HDRS})
 
@@ -31,5 +35,4 @@ target_link_libraries(libgui
 		${QT_LIBRARIES}
 )
 
-file(COPY main.qml DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
-
+add_subdirectory(qml)
