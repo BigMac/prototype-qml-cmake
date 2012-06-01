@@ -1,5 +1,6 @@
 #include "FileNetworkReply.h"
 #include <QDebug>
+#include <QTimer>
 
 FileNetworkReply::FileNetworkReply(QUrl url,
                            const QNetworkRequest &request,
@@ -8,8 +9,14 @@ FileNetworkReply::FileNetworkReply(QUrl url,
 {
     setUrl(url);
     setRequest(request);
+    setOpenMode(ReadOnly);
     m_file.open(ReadOnly);
-    qDebug() << "File" << url.toLocalFile() << "exists:" << m_file.exists();
+    qDebug() << "File" << url.toLocalFile() << "exists:" << m_file.exists()
+             << ",open:" << m_file.isOpen() <<",readable:" << m_file.isReadable()
+             << ",bytes available:" << m_file.bytesAvailable();
+
+    QTimer::singleShot( 0, this, SIGNAL(readyRead()) );
+    QTimer::singleShot( 0, this, SIGNAL(finished()) );
 }
 
 void FileNetworkReply::abort()
@@ -23,10 +30,20 @@ qint64 FileNetworkReply::bytesAvailable() const
 
 bool FileNetworkReply::isSequential() const
 {
-    return m_file.isSequential();
+    return true;
 }
 
 qint64 FileNetworkReply::readData(char *data, qint64 maxSize)
 {
-    return m_file.read(data, maxSize);
+    qint64 ret = m_file.read(data, maxSize);
+    if (ret == 0 && bytesAvailable() == 0)
+    {
+        QTimer::singleShot( 0, this, SIGNAL(finished()) );
+        return -1;
+    }
+    else
+    {
+        QTimer::singleShot( 0, this, SIGNAL(readyRead()) );
+        return ret;
+    }
 }

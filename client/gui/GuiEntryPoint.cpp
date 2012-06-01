@@ -8,6 +8,7 @@
 #include <QDeclarativeView>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QApplication>
+#include <QDebug>
 
 GuiEntryPoint::GuiEntryPoint()
 {
