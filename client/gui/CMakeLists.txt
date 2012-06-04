@@ -20,7 +20,7 @@ set(QML_DIR
 	qml
 )
 
-file(GLOB QML_FILES ${QML_DIR}/*.qml)
+file(GLOB_RECURSE QML_FILES ${QML_DIR}/*.qml)
 
 qt4_wrap_cpp(MOC_SRCS ${MOC_HDRS})
 
