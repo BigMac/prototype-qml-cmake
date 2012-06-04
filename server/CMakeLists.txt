@@ -2,7 +2,7 @@ find_package(Boost COMPONENTS system REQUIRED)
 find_package(Threads)
 
 include_directories(${Boost_INCLUDE_DIRS})
-
+add_definitions(-DBOOST_ALL_NO_LIB=1)
 set(SERVER_SRCS
 		Connection.cpp
 		SimpleServer.cpp
