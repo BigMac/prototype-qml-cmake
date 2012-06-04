@@ -34,5 +34,8 @@ add_library(libgui
 target_link_libraries(libgui
 		${QT_LIBRARIES}
 )
-
-add_subdirectory(qml)
+add_custom_target(copyqml ALL
+	COMMENT "Copying qmls"
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/${QML_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QML_DIR}
+)
+add_dependencies(libgui copyqml)
