@@ -16,6 +16,6 @@ Rectangle {
         }
     }
     Content.sub {
-
+        color: "red"
     }
 }
