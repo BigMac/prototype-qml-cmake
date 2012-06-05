@@ -21,6 +21,7 @@ set(QML_DIR
 )
 
 file(GLOB_RECURSE QML_FILES ${QML_DIR}/*.qml)
+file(GLOB_RECURSE QMLDIR_FILES ${QML_DIR}/*qmldir)
 
 qt4_wrap_cpp(MOC_SRCS ${MOC_HDRS})
 
@@ -30,6 +31,7 @@ add_library(libgui
 	${HDRS}
 	${MOC_SRCS}
 	${QML_FILES} #This is so they're visible in a generated project
+	${QMLDIR_FILES}
 )
 target_link_libraries(libgui
 		${QT_LIBRARIES}

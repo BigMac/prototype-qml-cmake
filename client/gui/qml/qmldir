@@ -1,0 +1,4 @@
+# When this is uncommented, we don't have to explicitly import content in main.qml
+# to use sub
+
+#Sub content/sub.qml
