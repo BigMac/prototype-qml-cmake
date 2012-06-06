@@ -9,8 +9,10 @@ class ServerConnection
 {
 public:
     ServerConnection();
+    ServerConnection(std::shared_ptr<ServerConnectionListener> listener);
     void registerListener(std::shared_ptr<ServerConnectionListener> listener);
     void connect(const std::string& address);
+    void run();
     size_t syncWrite(std::vector<char> data);
 
 private:

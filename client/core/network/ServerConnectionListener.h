@@ -6,8 +6,8 @@
 class ServerConnectionListener
 {
 public:
-    virtual void onDataReceived(std::vector<char> data) = 0;
-    virtual void onConnected(const boost::system::error_code& ec) = 0;
+    virtual void onDataReceived(ServerConnection* connection, std::vector<char> data) = 0;
+    virtual void onConnected(ServerConnection* connection, const boost::system::error_code& ec) = 0;
     virtual ~ServerConnectionListener() {}
 };
 

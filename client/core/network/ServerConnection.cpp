@@ -5,6 +5,11 @@ ServerConnection::ServerConnection() : m_socket(m_ioService)
 {
 }
 
+ServerConnection::ServerConnection(std::shared_ptr<ServerConnectionListener> listener)
+    : m_socket(m_ioService), m_listener(listener)
+{
+}
+
 void ServerConnection::registerListener(std::shared_ptr<ServerConnectionListener> listener)
 {
     m_listener = listener;
@@ -20,21 +25,29 @@ void ServerConnection::connect(const std::string& address)
     tcp::resolver resolver(m_ioService);
     tcp::resolver::query query(address);
 
-    tcp::resolver::iterator endPointIterator(resolver.resolve(query));
-    m_socket.async_connect(*endPointIterator,
+    //tcp::resolver::iterator endPointIterator(resolver.resolve(query));
+    tcp::endpoint endpoint(tcp::v4(), 6666);
+    m_socket.async_connect(//*endPointIterator,
+                           endpoint,
                            // Connection handler
                            [&](const boost::system::error_code& ec)
                             {
                                 if(!ec) bindOnReceive();
-                                m_listener->onConnected(ec);
+            else std::cout << ec.message();
+                                m_listener->onConnected(this, ec);
                             });
+}
+
+void ServerConnection::run()
+{
+    m_ioService.run();
 }
 
 void ServerConnection::bindOnReceive()
 {
     m_socket.async_receive(boost::asio::buffer(m_buffer),
                            [&](const boost::system::error_code&, std::size_t)
-                            { m_listener->onDataReceived(m_buffer); } );
+                            { m_listener->onDataReceived(this, m_buffer); } );
 }
 
 size_t ServerConnection::syncWrite(std::vector<char> data)
