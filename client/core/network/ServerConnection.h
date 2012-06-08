@@ -17,8 +17,7 @@ public:
 
 private:
     void dataReceived(const boost::system::error_code& ec,
-                      std::size_t bytes,
-                      const std::vector<char>& buffer);
+                      std::size_t bytes);
     void bindOnReceive();
     typedef boost::asio::ip::tcp tcp;
     boost::asio::io_service m_ioService;

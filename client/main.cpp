@@ -2,6 +2,8 @@
 #include "core/InventoryCore.h"
 #include "core/network/ServerConnection.h"
 #include "core/network/ServerConnectionListener.h"
+#include "MessageReceiver.h"
+#include "QmlRequest.h"
 
 class MockListener : public ServerConnectionListener
 {
@@ -20,7 +22,7 @@ public:
             connection->syncWrite(std::vector<char>(input.begin(), input.end()));
         }
         else
-            std::cout << "Statut: " << ec.message() << std::endl;
+            std::cout << "Status: " << ec.message() << std::endl;
     }
 
     virtual void onConnected(ServerConnection* connection, const boost::system::error_code& ec)

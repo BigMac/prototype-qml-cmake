@@ -3,6 +3,8 @@ file(GLOB HDRS *.h)
 
 add_subdirectory(gui)
 add_subdirectory(core)
+include_directories(../messages)
+
 add_executable(client
 	${SRCS}
 	${HDRS}

@@ -46,12 +46,22 @@ void ServerConnection::run()
 void ServerConnection::bindOnReceive()
 {
     m_socket.async_receive(boost::asio::buffer(m_buffer),
-                           [&](const boost::system::error_code& ec, std::size_t bytes)
-                            {
-                                m_listener->onDataReceived(this, ec, bytes, m_buffer);
-                                if(!ec)
-                                    bindOnReceive();
-                            } );
+                           std::bind(&ServerConnection::dataReceived,
+                                     this,
+                                     std::placeholders::_1,
+                                     std::placeholders::_2)
+                           );
+}
+
+void ServerConnection::dataReceived(const boost::system::error_code &ec,
+                                    std::size_t bytes)
+{
+    m_listener->onDataReceived(this, ec, bytes, m_buffer);
+    if(!ec)
+    {
+        m_buffer.clear();
+        bindOnReceive();
+    }
 }
 
 size_t ServerConnection::syncWrite(std::vector<char> data)
