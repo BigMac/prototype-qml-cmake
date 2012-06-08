@@ -6,9 +6,21 @@
 class MockListener : public ServerConnectionListener
 {
 public:
-    virtual void onDataReceived(ServerConnection* connection, std::vector<char> data)
+    virtual void onDataReceived(ServerConnection* connection,
+                                const boost::system::error_code& ec,
+                                size_t bytesReceived,
+                                const std::vector<char>& data)
     {
-        std::cout << "Data received: " << &data[0] << std::endl;
+        if(!ec && bytesReceived)
+        {
+            std::cout << "Data received: " << &data[0] << std::endl;
+            std::string input;
+            std::cout << "Send: ";
+            std::cin >> input;
+            connection->syncWrite(std::vector<char>(input.begin(), input.end()));
+        }
+        else
+            std::cout << "Statut: " << ec.message() << std::endl;
     }
 
     virtual void onConnected(ServerConnection* connection, const boost::system::error_code& ec)

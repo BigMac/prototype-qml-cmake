@@ -10,11 +10,11 @@ Connection::Connection(std::shared_ptr<tcp::socket> socket) : m_buffer(100), m_s
 
 void Connection::run()
 {
-    m_socket->async_read_some(boost::asio::buffer(m_buffer),
-                             std::bind(&Connection::handleRequest,
-                                       shared_from_this(),
-                                       std::placeholders::_1,
-                                       std::placeholders::_2));
+    m_socket->async_receive(boost::asio::buffer(m_buffer),
+                            std::bind(&Connection::handleRequest,
+                                      shared_from_this(),
+                                      std::placeholders::_1,
+                                      std::placeholders::_2));
 }
 
 void Connection::handleRequest(const boost::system::error_code& error, std::size_t bytes_received)
@@ -26,10 +26,6 @@ void Connection::handleRequest(const boost::system::error_code& error, std::size
         std::cout << "Sending echo" << std::endl;
         size_t bytes_sent = boost::asio::write(*m_socket, boost::asio::buffer(m_buffer));
         assert(bytes_sent == m_buffer.size());
-    }
-    else
-    {
-        std::cout << "Empty receive" << std::endl;
     }
     if(!error)
         run();

@@ -16,6 +16,9 @@ public:
     size_t syncWrite(std::vector<char> data);
 
 private:
+    void dataReceived(const boost::system::error_code& ec,
+                      std::size_t bytes,
+                      const std::vector<char>& buffer);
     void bindOnReceive();
     typedef boost::asio::ip::tcp tcp;
     boost::asio::io_service m_ioService;
