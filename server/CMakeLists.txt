@@ -14,6 +14,7 @@ add_executable(server
 link_directories ( ${Boost_LIBRARY_DIRS} )
 add_definitions(-DBOOST_ALL_NO_LIB=1)
 target_link_libraries(server
+	libmessages
 	${Boost_LIBRARIES}
 	${CMAKE_THREAD_LIBS_INIT}
 )

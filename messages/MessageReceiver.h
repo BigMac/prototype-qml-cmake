@@ -4,19 +4,20 @@
 #include "UnsupportedMessageReceived.h"
 #include <memory>
 
-template <typename Message_t>
-class ConcreteReceiver
-{
-public:
-    virtual void receive(std::shared_ptr<Message_t>) { throw UnsupportedMessageReceived<Message_t>(); }
-};
+/* Sadly, this cannot be done by multiple inheritance because name resolution is
+ * done before overload resolution and we get amiguity. We need all these overloads
+ * to be in MessageReceiver. */
+#define RECEIVES(Message_t) \
+virtual void receive(std::shared_ptr<Message_t>) { throw UnsupportedMessageReceived<Message_t>(); }
+
 
 class QmlRequest;
 
-class MessageReceiver :
-        public ConcreteReceiver<QmlRequest>,
-        public ConcreteReceiver<float>
+class MessageReceiver
 {
+public:
+    RECEIVES(QmlRequest)
+    RECEIVES(float)
 };
 
 #endif // MESSAGERECEIVER_H

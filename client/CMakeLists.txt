@@ -12,5 +12,6 @@ add_executable(client
 target_link_libraries(client
 	libcore
 	libgui
+	libmessages
 )
 
