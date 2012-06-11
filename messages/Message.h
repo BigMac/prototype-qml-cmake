@@ -1,6 +1,7 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 #include "MessageReceiver.h"
+#include <boost/serialization/base_object.hpp>
 #include <memory>
 
 namespace boost {
@@ -12,8 +13,10 @@ class access; // For friend access to serialization.
 
 class Message
 {
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int file_version){}
 public:
-    virtual void accept(MessageReceiver* receiver) = 0;
+    virtual void accept(MessageReceiver& receiver) = 0;
     virtual ~Message() {}
 };
 
@@ -21,13 +24,18 @@ public:
 template <typename Message_t>
 class MessageImplementation : public Message, public std::enable_shared_from_this<Message_t>
 {
-public:
-    virtual void accept(MessageReceiver* receiver)
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int file_version)
     {
-        receiver->receive(this->shared_from_this());
+        boost::serialization::base_object<Message>(*this);
     }
 
-    friend class boost::serialization::access;
+public:
+    virtual void accept(MessageReceiver& receiver)
+    {
+        receiver.receive(this->shared_from_this());
+    }
 };
 
 #endif // MESSAGE_H

@@ -15,11 +15,11 @@ public:
     {
         if(!ec && bytesReceived)
         {
-            std::cout << "Data received: " << &data[0] << std::endl;
-            std::string input;
-            std::cout << "Send: ";
-            std::cin >> input;
-            connection->syncWrite(std::vector<char>(input.begin(), input.end()));
+//            std::cout << "Data received: " << &data[0] << std::endl;
+//            std::string input;
+//            std::cout << "Send: ";
+//            std::cin >> input;
+//            connection->syncWrite(std::vector<char>(input.begin(), input.end()));
         }
         else
             std::cout << "Status: " << ec.message() << std::endl;
@@ -28,8 +28,8 @@ public:
     virtual void onConnected(ServerConnection* connection, const boost::system::error_code& ec)
     {
         std::cout << "Connected: " << ec.message() << std::endl;
-        std::vector<char> data = {'a', 'b', 'c'};
-        connection->syncWrite(data);
+        auto qmlReq = std::make_shared<QmlRequest>("url");
+        connection->syncWrite(qmlReq);
     }
 };
 

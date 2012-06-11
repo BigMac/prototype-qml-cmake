@@ -64,7 +64,9 @@ void ServerConnection::dataReceived(const boost::system::error_code &ec,
     }
 }
 
-size_t ServerConnection::syncWrite(std::vector<char> data)
+size_t ServerConnection::syncWrite(std::shared_ptr<Message> msg)
 {
-    return boost::asio::write(m_socket, boost::asio::buffer(data));
+    std::vector<std::shared_ptr<Message> > msgs;
+    msgs.push_back(msg);
+    return boost::asio::write(m_socket, boost::asio::buffer(msgs));
 }

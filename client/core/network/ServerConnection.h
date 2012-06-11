@@ -3,6 +3,7 @@
 #include <boost/asio.hpp>
 #include <memory>
 
+class Message;
 class ServerConnectionListener;
 
 class ServerConnection
@@ -13,7 +14,7 @@ public:
     void registerListener(std::shared_ptr<ServerConnectionListener> listener);
     void connect(const std::string& address);
     void run();
-    size_t syncWrite(std::vector<char> data);
+    size_t syncWrite(std::shared_ptr<Message> message);
 
 private:
     void dataReceived(const boost::system::error_code& ec,
