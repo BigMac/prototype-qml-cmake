@@ -1,5 +1,7 @@
 #include "ServerConnection.h"
 #include "ServerConnectionListener.h"
+#include "Message.h"
+#include "SerializedMessage.h"
 
 ServerConnection::ServerConnection() : m_socket(m_ioService), m_buffer(100)
 {
@@ -66,7 +68,8 @@ void ServerConnection::dataReceived(const boost::system::error_code &ec,
 
 size_t ServerConnection::syncWrite(std::shared_ptr<Message> msg)
 {
-    std::vector<std::shared_ptr<Message> > msgs;
-    msgs.push_back(msg);
-    return boost::asio::write(m_socket, boost::asio::buffer(msgs));
+    std::vector<SerializedMessage> messages;
+    messages.push_back(msg->serialize());
+    std::cout << &messages[0] << std::endl;
+    return boost::asio::write(m_socket, messages);
 }

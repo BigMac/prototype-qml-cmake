@@ -1,7 +1,8 @@
 find_package(Boost COMPONENTS system REQUIRED)
 find_package(Threads)
 
-include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${Boost_INCLUDE_DIRS}
+../../../messages)
 
 file(GLOB SRCS *.cpp)
 file(GLOB HDRS *.h)

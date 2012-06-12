@@ -1,6 +1,8 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
+#include "SerializedMessage.h"
 #include <boost/asio.hpp>
+#include <boost/shared_ptr.hpp>
 //#include <boost/enable_shared_from_this.hpp>
 #include <functional>
 #include <memory>
@@ -20,7 +22,7 @@ public:
     void registerReceiver(std::shared_ptr<MessageReceiver> receiver);
 private:
     void handleRequest(const boost::system::error_code &error, std::size_t bytes_received);
-    std::vector<std::shared_ptr<Message> > m_buffer;
+    std::vector<SerializedMessage> m_buffer;
     std::shared_ptr<tcp::socket> m_socket;
     std::shared_ptr<MessageReceiver> m_receiver;
 };

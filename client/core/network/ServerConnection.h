@@ -14,7 +14,7 @@ public:
     void registerListener(std::shared_ptr<ServerConnectionListener> listener);
     void connect(const std::string& address);
     void run();
-    size_t syncWrite(std::shared_ptr<Message> message);
+    size_t syncWrite(std::shared_ptr<Message> msg);
 
 private:
     void dataReceived(const boost::system::error_code& ec,

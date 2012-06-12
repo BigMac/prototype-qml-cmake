@@ -3,6 +3,7 @@
 #include "core/network/ServerConnection.h"
 #include "core/network/ServerConnectionListener.h"
 #include "MessageReceiver.h"
+#include "MessageSerializer.h"
 #include "QmlRequest.h"
 
 class MockListener : public ServerConnectionListener
@@ -32,7 +33,6 @@ public:
         connection->syncWrite(qmlReq);
     }
 };
-
 
 int main(int argc, char *argv[])
 {
