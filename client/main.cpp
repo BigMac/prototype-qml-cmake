@@ -1,20 +1,20 @@
 #include "gui/GuiEntryPoint.h"
 #include "core/InventoryCore.h"
-#include "core/network/ServerConnection.h"
-#include "core/network/ServerConnectionListener.h"
+#include "core/ClientConnection.h"
+#include "CommonConnectionListener.h"
+#include "CommonConnection.h"
+#include "SerializedMessage.h"
 #include "MessageReceiver.h"
 #include "MessageSerializer.h"
 #include "QmlRequest.h"
 
-class MockListener : public ServerConnectionListener
+class MockListener : public CommonConnectionListener
 {
 public:
-    virtual void onDataReceived(ServerConnection* connection,
-                                const boost::system::error_code& ec,
-                                size_t bytesReceived,
-                                const std::vector<char>& data)
+    virtual void onMessageReceived(CommonConnection& connection,
+                                   SerializedMessage& message)
     {
-        if(!ec && bytesReceived)
+        /*if(!ec && bytesReceived)
         {
 //            std::cout << "Data received: " << &data[0] << std::endl;
 //            std::string input;
@@ -23,22 +23,31 @@ public:
 //            connection->syncWrite(std::vector<char>(input.begin(), input.end()));
         }
         else
-            std::cout << "Status: " << ec.message() << std::endl;
+            std::cout << "Status: " << ec.message() << std::endl;*/
     }
 
-    virtual void onConnected(ServerConnection* connection, const boost::system::error_code& ec)
+    virtual void onConnected(CommonConnection& connection)
     {
-        std::cout << "Connected: " << ec.message() << std::endl;
-        auto qmlReq = std::make_shared<QmlRequest>("url");
-        connection->syncWrite(qmlReq);
+        std::cout << "Connected " << std::endl;
+        SerializedMessage message;
+        message.data.push_back('a');
+        message.data.push_back('b');
+        message.data.push_back('c');
+        message.message_type[0] = 5;
+        connection.write(message);
+    }
+    virtual void onMessageReceivedErrror(CommonConnection& connection,
+                                         const boost::system::error_code& ec)
+    {
+
     }
 };
 
 int main(int argc, char *argv[])
 {
     auto listener = std::make_shared<MockListener>();
-    ServerConnection connection(listener);
-    connection.connect("127.0.0.1");
+    ClientConnection connection;
+    connection.connectToServer("127.0.0.1", listener);
     connection.run();
 
     /*GuiEntryPoint entryPoint;

@@ -5,7 +5,3 @@ add_library(libcore
 	${SRCS}
 	${HDRS}
 )
-add_subdirectory(network)
-target_link_libraries(libcore
-	libnetwork
-)

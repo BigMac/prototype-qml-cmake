@@ -1,9 +1,9 @@
 file(GLOB SRCS *.cpp)
 file(GLOB HDRS *.h)
 
+include_directories(../common)
 add_subdirectory(gui)
 add_subdirectory(core)
-include_directories(../messages)
 
 add_executable(client
 	${SRCS}
@@ -12,6 +12,6 @@ add_executable(client
 target_link_libraries(client
 	libcore
 	libgui
-	libmessages
+	libcommon
 )
 

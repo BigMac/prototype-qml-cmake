@@ -12,4 +12,4 @@ endif(CMAKE_COMPILER_IS_GNUCXX)
 
 add_subdirectory(client)
 add_subdirectory(server)
-add_subdirectory(messages)
+add_subdirectory(common)
