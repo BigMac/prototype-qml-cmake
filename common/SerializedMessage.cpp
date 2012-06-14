@@ -44,3 +44,13 @@ void SerializedMessage::prepareForSend()
     assert(data_size.size() == 1);
     data_size[0] = data.size();
 }
+
+void SerializedMessage::setData(const std::string& input)
+{
+    data = std::vector<char>(input.begin(), input.end());
+}
+
+std::string SerializedMessage::getDataAsString() const
+{
+    return std::string(data.begin(), data.end());
+}

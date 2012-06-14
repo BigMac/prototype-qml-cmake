@@ -1,10 +1,11 @@
 #include "MessageRegistry.h"
 #include <algorithm>
 
-void MessageRegistry::registerBuilder(const std::string& typeDiscriminator,
-                                        BuilderFunction_t builder)
+bool MessageRegistry::registerBuilder(const std::string& typeDiscriminator,
+                                      BuilderFunction_t builder)
 {
     m_registeredBuilders[typeDiscriminator] = builder;
+    return true;
 }
 
 

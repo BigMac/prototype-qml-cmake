@@ -2,6 +2,9 @@
 #include "CommonConnection.h"
 #include "CommonConnectionListener.h"
 #include "SerializedMessage.h"
+#include "Message.h"
+#include "MessageReceiver.h"
+#include "MessageSerializer.h"
 
 class ServerConnectionListener : public CommonConnectionListener
 {
@@ -9,8 +12,10 @@ public:
     virtual void onMessageReceived(CommonConnection& connection,
                                    SerializedMessage& message)
     {
-        std::string msgContent(message.data.begin(), message.data.end());
-        std::cout << "Message received " << msgContent << std::endl;
+        std::cout << "Message received " << std::endl;
+        MessageSerializer serializer;
+        auto deserializedMessage = serializer.deserialize(message);
+        deserializedMessage->accept(m_receiver);
     }
 
     virtual void onMessageReceivedErrror(CommonConnection& connection,
@@ -23,6 +28,8 @@ public:
     {
         std::cout << "New connection" << std::endl;
     }
+private:
+    MessageReceiver m_receiver;
 };
 
 

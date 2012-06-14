@@ -29,12 +29,9 @@ public:
     virtual void onConnected(CommonConnection& connection)
     {
         std::cout << "Connected " << std::endl;
-        SerializedMessage message;
-        message.data.push_back('a');
-        message.data.push_back('b');
-        message.data.push_back('c');
-        message.message_type[0] = 5;
-        connection.write(message);
+        auto message = std::make_shared<QmlRequest>("http://some.url");
+        SerializedMessage serialized = message->serialize();
+        connection.write(serialized);
     }
     virtual void onMessageReceivedErrror(CommonConnection& connection,
                                          const boost::system::error_code& ec)

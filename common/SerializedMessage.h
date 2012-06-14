@@ -11,9 +11,15 @@ public:
     SerializedMessage();
     SerializedMessage(NumericMessageTypeDiscriminator_t type,
                       std::vector<char>& data);
+
     void setTypeDiscriminator(const std::string& type);
-    const std::string& getTypeDiscriminator() const;
+
+    const std::string& getTypeDiscriminator() const;    
     NumericMessageTypeDiscriminator_t getNumericTypeDiscriminator() const;
+
+    void setData(const std::string& input);
+    std::string getDataAsString() const;
+
     void prepareForReceive();
     void prepareForSend();
 

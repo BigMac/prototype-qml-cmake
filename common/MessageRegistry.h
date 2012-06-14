@@ -10,7 +10,6 @@
 #include <memory>
 #include <string>
 
-
 class Message;
 
 class MessageRegistry : public boost::serialization::singleton<MessageRegistry>
@@ -26,7 +25,7 @@ public:
             std::runtime_error(type) {}
     };
 
-    void registerBuilder(const std::string& typeDiscriminator,
+    bool registerBuilder(const std::string& typeDiscriminator,
                          BuilderFunction_t builder);
     BuilderFunction_t getBuilder(const std::string& typeDiscriminator) const;
     BuilderFunction_t getBuilder(NumericMessageTypeDiscriminator_t typeDiscriminator) const;
@@ -41,5 +40,10 @@ private:
     RegisteredBuildersMap_t::const_iterator getIterator(NumericMessageTypeDiscriminator_t typeDiscriminator) const;
     RegisteredBuildersMap_t::const_iterator getIterator(const std::string& typeDiscriminator) const;
 };
+
+#define REGISTER_BUILDER(messageName, function) \
+    namespace { \
+    bool dummy = MessageRegistry::get_mutable_instance().registerBuilder(messageName, function); \
+    }
 
 #endif // MESSAGEREGISTRY_H
