@@ -12,11 +12,13 @@ virtual void receive(std::shared_ptr<Message_t>) { throw UnsupportedMessageRecei
 
 
 class ResourceRequest;
+class ResourceResponse;
 
 class MessageReceiver
 {
 public:
     RECEIVES(ResourceRequest)
+    RECEIVES(ResourceResponse)
     RECEIVES(float)
 };
 

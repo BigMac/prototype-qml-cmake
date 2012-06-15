@@ -19,6 +19,10 @@ public:
     virtual void accept(MessageReceiver& receiver)
     {
         receiver.receive(this->shared_from_this());
+        /* If you get a "no matching function for call to
+         * ‘MessageReceiver::receive(std::shared_ptr<YourMessage>)’" error,
+         * it means you forgot to add YourMessage  to MessageReceiver's list.
+         * Go there and add RECEIVES(YourMessage) to its body. */
     }
 };
 

@@ -1,5 +1,5 @@
-#ifndef QMLREQUEST_H
-#define QMLREQUEST_H
+#ifndef RESOURCEREQUEST_H
+#define RESOURCEREQUEST_H
 #include "Message.h"
 #include <string>
 
@@ -18,4 +18,4 @@ private:
 #include "MessageRegistry.h"
 REGISTER_BUILDER("ResourceRequest", &ResourceRequest::deserialize)
 
-#endif // QMLREQUEST_H
+#endif // RESOURCEREQUEST_H

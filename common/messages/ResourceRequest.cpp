@@ -16,7 +16,6 @@ const std::string& ResourceRequest::getUrl() const
 
 SerializedMessage ResourceRequest::serialize() const
 {
-    //std::vector<char> data(m_url.begin(), m_url.end());
     SerializedMessage result;
     result.setTypeDiscriminator("QmlRequest");
     result.setData(m_url);
