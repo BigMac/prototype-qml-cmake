@@ -11,12 +11,12 @@
 virtual void receive(std::shared_ptr<Message_t>) { throw UnsupportedMessageReceived<Message_t>(); }
 
 
-class QmlRequest;
+class ResourceRequest;
 
 class MessageReceiver
 {
 public:
-    RECEIVES(QmlRequest)
+    RECEIVES(ResourceRequest)
     RECEIVES(float)
 };
 

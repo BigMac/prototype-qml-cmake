@@ -15,7 +15,10 @@ add_library(libcommon
 
 link_directories ( ${Boost_LIBRARY_DIRS} )
 add_definitions(-DBOOST_ALL_NO_LIB=1)
+
+add_subdirectory(messages)
 target_link_libraries(libcommon
+	libmessages
 	${Boost_LIBRARIES}
 	${CMAKE_THREAD_LIBS_INIT}
 )

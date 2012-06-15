@@ -6,7 +6,7 @@
 #include "SerializedMessage.h"
 #include "MessageReceiver.h"
 #include "MessageSerializer.h"
-#include "QmlRequest.h"
+#include "messages/ResourceRequest.h"
 
 class MockListener : public CommonConnectionListener
 {
@@ -29,7 +29,7 @@ public:
     virtual void onConnected(CommonConnection& connection)
     {
         std::cout << "Connected " << std::endl;
-        auto message = std::make_shared<QmlRequest>("http://some.url");
+        auto message = std::make_shared<ResourceRequest>("http://some.url");
         SerializedMessage serialized = message->serialize();
         connection.write(serialized);
     }
