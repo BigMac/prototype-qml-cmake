@@ -3,6 +3,7 @@
 #include "CommonConnectionListener.h"
 #include "SerializedMessage.h"
 #include "Message.h"
+#include "messages/ResourceRequest.h"
 #include "MessageReceiver.h"
 #include "MessageSerializer.h"
 

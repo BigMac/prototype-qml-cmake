@@ -17,7 +17,7 @@ const std::string& ResourceRequest::getUrl() const
 SerializedMessage ResourceRequest::serialize() const
 {
     SerializedMessage result;
-    result.setTypeDiscriminator("QmlRequest");
+    result.setTypeDiscriminator("ResourceRequest");
     result.setData(m_url);
     return result;
 }
@@ -25,7 +25,7 @@ SerializedMessage ResourceRequest::serialize() const
 
 std::shared_ptr<ResourceRequest> ResourceRequest::deserialize(SerializedMessage& serialized)
 {
-    assert(serialized.getTypeDiscriminator() == "QmlRequest");
+    assert(serialized.getTypeDiscriminator() == "ResourceRequest");
     return std::make_shared<ResourceRequest>(serialized.getDataAsString());
 }
 
