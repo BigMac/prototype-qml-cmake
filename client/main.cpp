@@ -14,6 +14,7 @@ public:
     virtual void onMessageReceived(CommonConnection& connection,
                                    SerializedMessage& message)
     {
+        std::cout << "Message received "<< message.getTypeDiscriminator() <<std::endl;
         /*if(!ec && bytesReceived)
         {
 //            std::cout << "Data received: " << &data[0] << std::endl;
@@ -36,7 +37,7 @@ public:
     virtual void onMessageReceivedErrror(CommonConnection& connection,
                                          const boost::system::error_code& ec)
     {
-
+        std::cout << "onMessageReceivedErrror " << ec.message() << std::endl;
     }
 };
 

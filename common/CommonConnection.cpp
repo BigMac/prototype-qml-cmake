@@ -89,6 +89,7 @@ void CommonConnection::dataReceived(const boost::system::error_code &ec,
 
 size_t CommonConnection::write(SerializedMessage& serializedMessage)
 {
+    std::cout << "Sending " << serializedMessage.getTypeDiscriminator() << std::endl;
     serializedMessage.prepareForSend();
     std::vector<boost::asio::const_buffer> dataToSend;
     dataToSend.push_back(boost::asio::buffer(serializedMessage.data_size));

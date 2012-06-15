@@ -1,4 +1,5 @@
 #include "ResourceRequest.h"
+#include <cassert>
 
 ResourceRequest::ResourceRequest()
 {
@@ -21,7 +22,6 @@ SerializedMessage ResourceRequest::serialize() const
     result.setData(m_url);
     return result;
 }
-
 
 std::shared_ptr<ResourceRequest> ResourceRequest::deserialize(SerializedMessage& serialized)
 {

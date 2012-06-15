@@ -1,6 +1,10 @@
 #ifndef MESSAGEREGISTRY_H
 #define MESSAGEREGISTRY_H
 #include "SerializedMessage.h"
+
+#include "messages/ResourceRequest.h"
+#include "messages/ResourceResponse.h"
+
 #include <boost/serialization/singleton.hpp>
 #include <boost/lexical_cast.hpp>
 #include <cstdint>
@@ -41,9 +45,13 @@ private:
     RegisteredBuildersMap_t::const_iterator getIterator(const std::string& typeDiscriminator) const;
 };
 
-#define REGISTER_BUILDER(messageName, function) \
+#define REGISTER_BUILDER(messageType) \
     namespace { \
-    bool dummy = MessageRegistry::get_mutable_instance().registerBuilder(messageName, function); \
+        bool messageType = MessageRegistry::get_mutable_instance().registerBuilder(#messageType, &messageType::deserialize); \
     }
+
+
+REGISTER_BUILDER(ResourceRequest)
+REGISTER_BUILDER(ResourceResponse)
 
 #endif // MESSAGEREGISTRY_H
