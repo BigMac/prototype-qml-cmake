@@ -3,9 +3,10 @@
 #include <array>
 #include <string>
 #include <vector>
+#include <cstdint>
 
 typedef uint32_t NumericMessageTypeDiscriminator_t;
-struct SerializedMessage
+class SerializedMessage
 {
 public:
     SerializedMessage();

@@ -33,5 +33,5 @@ void ResourceResponse::setData(const std::vector<char>& data)
 
 void ResourceResponse::setData(const std::string& data)
 {
-    m_data = decltype(m_data)(data.begin(), data.end());
+    m_data = std::vector<char>(data.begin(), data.end());
 }

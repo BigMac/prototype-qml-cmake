@@ -1,7 +1,12 @@
+find_package(Boost COMPONENTS system REQUIRED)
 file(GLOB SRCS *.cpp)
 file(GLOB HDRS *.h)
 
-include_directories(../common)
+include_directories(
+../common
+${Boost_INCLUDE_DIRS})
+add_definitions(-DBOOST_ALL_NO_LIB=1)
+
 add_subdirectory(gui)
 add_subdirectory(core)
 
