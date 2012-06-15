@@ -7,7 +7,6 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 	add_definitions("-Wall")
 	add_definitions("-Werror")
 	add_definitions("-std=c++0x")
-	add_definitions(-D__GXX_EXPERIMENTAL_CXX0X__=1)
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 add_subdirectory(client)
