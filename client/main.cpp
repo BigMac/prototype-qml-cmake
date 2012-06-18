@@ -3,9 +3,7 @@
 #include "core/ClientConnection.h"
 #include "CommonConnectionListener.h"
 #include "CommonConnection.h"
-#include "SerializedMessage.h"
 #include "MessageReceiver.h"
-#include "MessageSerializer.h"
 #include "messages/ResourceRequest.h"
 #include "messages/ResourceResponse.h"
 

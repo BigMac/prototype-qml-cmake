@@ -1,11 +1,8 @@
 #include "SimpleServer.h"
 #include "CommonConnection.h"
 #include "CommonConnectionListener.h"
-#include "MessageRegistry.h"
-#include "SerializedMessage.h"
 #include "Message.h"
 #include "messages/ResourceRequest.h"
-#include "MessageSerializer.h"
 #include "ResourceRequestHandler.h"
 
 class ServerConnectionListener : public CommonConnectionListener
