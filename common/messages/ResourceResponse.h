@@ -1,6 +1,6 @@
 #ifndef RESOURCERESPONSE_H
 #define RESOURCERESPONSE_H
-#include "../Message.h"
+#include "Message.h"
 #include <vector>
 #include <string>
 #include <boost/serialization/vector.hpp>

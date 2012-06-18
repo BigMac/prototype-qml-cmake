@@ -1,6 +1,6 @@
 #ifndef RESOURCEREQUEST_H
 #define RESOURCEREQUEST_H
-#include "../Message.h"
+#include "Message.h"
 #include <string>
 #include <boost/serialization/string.hpp>
 
