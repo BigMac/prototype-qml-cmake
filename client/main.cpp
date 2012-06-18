@@ -3,9 +3,7 @@
 #include "core/ClientConnection.h"
 #include "CommonConnectionListener.h"
 #include "CommonConnection.h"
-#include "MessageReceiver.h"
 #include "messages/ResourceRequest.h"
-#include "messages/ResourceResponse.h"
 
 class MockListener : public CommonConnectionListener
 {
@@ -14,16 +12,6 @@ public:
                                    std::shared_ptr<Message> message)
     {
         std::cout << "Message received " <<std::endl;
-        /*if(!ec && bytesReceived)
-        {
-//            std::cout << "Data received: " << &data[0] << std::endl;
-//            std::string input;
-//            std::cout << "Send: ";
-//            std::cin >> input;
-//            connection->syncWrite(std::vector<char>(input.begin(), input.end()));
-        }
-        else
-            std::cout << "Status: " << ec.message() << std::endl;*/
     }
 
     virtual void onConnected(CommonConnection& connection)

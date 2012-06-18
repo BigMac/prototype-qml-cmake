@@ -1,8 +1,6 @@
 #include "CommonConnection.h"
 #include "CommonConnectionListener.h"
 #include "Message.h"
-#include "messages/ResourceRequest.h"
-#include "messages/ResourceResponse.h"
 #include <cassert>
 
 CommonConnection::CommonConnection(std::shared_ptr<tcp::socket> socket,
