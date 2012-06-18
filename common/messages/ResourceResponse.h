@@ -28,13 +28,12 @@ public:
     std::string getDataAsString() const;
     void setData(const std::vector<char>& data);
     void setData(const std::string& data);
-
-    virtual SerializedMessage serialize() const;
-    static std::shared_ptr<ResourceResponse> deserialize(SerializedMessage& serialized);
 private:
     bool m_success;
     std::string m_url;
     std::vector<char> m_data;
 };
+
+BOOST_CLASS_EXPORT_KEY(ResourceResponse)
 
 #endif // RESOURCERESPONSE_H

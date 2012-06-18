@@ -1,9 +1,9 @@
 #ifndef COMMONCONNECTION_H
 #define COMMONCONNECTION_H
-#include "SerializedMessage.h"
 #include <boost/asio.hpp>
 #include <memory>
 
+class Message;
 class CommonConnectionListener;
 class CommonConnection : public std::enable_shared_from_this<CommonConnection>
 {
@@ -15,21 +15,20 @@ public:
     void registerListener(std::shared_ptr<CommonConnectionListener> listener);
 
     void connected();
-    size_t write(SerializedMessage& serializedMessage);
+    size_t write(Message& message);
     void beginReceive();
     static std::shared_ptr<CommonConnection> create(std::shared_ptr<tcp::socket> socket,
                                                     std::shared_ptr<CommonConnectionListener> listener = std::shared_ptr<CommonConnectionListener>());
 protected:
     void sizeReceived(const boost::system::error_code& ec,
                       std::size_t bytes);
-    void typeReceived(const boost::system::error_code& ec,
-                      std::size_t bytes);
     void dataReceived(const boost::system::error_code& ec,
                       std::size_t bytes);
     std::shared_ptr<tcp::socket> m_socket;
     std::shared_ptr<CommonConnectionListener> m_listener;
-    SerializedMessage m_inboundMessage;
-
+    std::vector<size_t> m_inboundMessageSize;
+    std::vector<char> m_inboundBuffer;
+    //std::string m_outboundData;
 };
 
 #endif // COMMONCONNECTION_H

@@ -7,14 +7,15 @@
 #include "MessageReceiver.h"
 #include "MessageSerializer.h"
 #include "messages/ResourceRequest.h"
+#include "messages/ResourceResponse.h"
 
 class MockListener : public CommonConnectionListener
 {
 public:
     virtual void onMessageReceived(CommonConnection& connection,
-                                   SerializedMessage& message)
+                                   std::shared_ptr<Message> message)
     {
-        std::cout << "Message received "<< message.getTypeDiscriminator() <<std::endl;
+        std::cout << "Message received " <<std::endl;
         /*if(!ec && bytesReceived)
         {
 //            std::cout << "Data received: " << &data[0] << std::endl;
@@ -31,8 +32,7 @@ public:
     {
         std::cout << "Connected " << std::endl;
         auto message = std::make_shared<ResourceRequest>("http://some.url");
-        SerializedMessage serialized = message->serialize();
-        connection.write(serialized);
+        connection.write(*message);
     }
     virtual void onMessageReceivedErrror(CommonConnection& connection,
                                          const boost::system::error_code& ec)
@@ -43,21 +43,6 @@ public:
 
 int main(int argc, char *argv[])
 {
-    std::shared_ptr<Message> msg(new ResourceRequest("some url"));
-    std::stringstream ss;
-    boost::archive::text_oarchive ar(ss);
-    //ar.register_type<ResourceRequest>();
-    Message* raw = msg.get();
-    ar << raw;
-
-    Message* deserialized = NULL;
-    std::istringstream iss(ss.str());
-    boost::archive::text_iarchive iar(iss);
-    //iar.register_type<ResourceRequest>();
-    iar >> deserialized;
-
-
-    std::cout << ss.str() << std::endl;
 
     auto listener = std::make_shared<MockListener>();
     ClientConnection connection;

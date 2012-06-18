@@ -45,13 +45,4 @@ private:
     RegisteredBuildersMap_t::const_iterator getIterator(const std::string& typeDiscriminator) const;
 };
 
-#define REGISTER_BUILDER(messageType) \
-    namespace { \
-        bool messageType = MessageRegistry::get_mutable_instance().registerBuilder(#messageType, &messageType::deserialize); \
-    }
-
-
-REGISTER_BUILDER(ResourceRequest)
-REGISTER_BUILDER(ResourceResponse)
-
 #endif // MESSAGEREGISTRY_H

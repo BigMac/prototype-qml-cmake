@@ -16,11 +16,11 @@ class ResourceRequest : public MessageImplementation<ResourceRequest>
 public:
     ResourceRequest(const std::string& url);
     const std::string& getUrl() const;
-    virtual SerializedMessage serialize() const;
-    static std::shared_ptr<ResourceRequest> deserialize(SerializedMessage& serialized);
 private:
     ResourceRequest();
     std::string m_url;
 };
+
+BOOST_CLASS_EXPORT_KEY(ResourceRequest)
 
 #endif // RESOURCEREQUEST_H

@@ -1,7 +1,6 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 #include "MessageReceiver.h"
-#include "SerializedMessage.h"
 #include <memory>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
@@ -15,7 +14,6 @@ class Message
     void serialize(Archive &, const unsigned int){}
 public:
     virtual void accept(MessageReceiver& receiver) = 0;
-    virtual SerializedMessage serialize() const = 0;
     virtual ~Message() {}
 };
 

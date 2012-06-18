@@ -1,12 +1,13 @@
 #include "CommonConnection.h"
 #include "CommonConnectionListener.h"
 #include "Message.h"
-#include "SerializedMessage.h"
+#include "messages/ResourceRequest.h"
+#include "messages/ResourceResponse.h"
 #include <cassert>
 
 CommonConnection::CommonConnection(std::shared_ptr<tcp::socket> socket,
                  std::shared_ptr<CommonConnectionListener> listener) :
-    m_socket(socket), m_listener(listener)
+    m_socket(socket), m_listener(listener), m_inboundMessageSize(1)
 {
 }
 
@@ -29,8 +30,7 @@ void CommonConnection::connected()
 
 void CommonConnection::beginReceive()
 {
-    m_inboundMessage = SerializedMessage();
-    m_socket->async_receive(boost::asio::buffer(m_inboundMessage.data_size),
+    m_socket->async_receive(boost::asio::buffer(m_inboundMessageSize),
                            std::bind(&CommonConnection::sizeReceived,
                                      shared_from_this(),
                                      std::placeholders::_1,
@@ -47,24 +47,8 @@ void CommonConnection::sizeReceived(const boost::system::error_code& ec,
         m_listener->onMessageReceivedErrror(*this, ec);
         return;
     }
-    m_inboundMessage.prepareForReceive();
-    m_socket->async_receive(boost::asio::buffer(m_inboundMessage.message_type),
-                           std::bind(&CommonConnection::typeReceived,
-                                     shared_from_this(),
-                                     std::placeholders::_1,
-                                     std::placeholders::_2)
-                           );
-}
-
-void CommonConnection::typeReceived(const boost::system::error_code& ec,
-                  std::size_t bytes)
-{
-    if(ec)
-    {
-        std::cout << "typeReceived: " << ec.message() << std::endl;
-        return;
-    }
-    m_socket->async_receive(boost::asio::buffer(m_inboundMessage.data),
+    m_inboundBuffer.resize(m_inboundMessageSize[0]);
+    m_socket->async_receive(boost::asio::buffer(m_inboundBuffer),
                            std::bind(&CommonConnection::dataReceived,
                                      shared_from_this(),
                                      std::placeholders::_1,
@@ -77,8 +61,16 @@ void CommonConnection::dataReceived(const boost::system::error_code &ec,
 {
     if(!ec)
     {
-        m_listener->onMessageReceived(*this, m_inboundMessage);
-        m_inboundMessage = SerializedMessage();
+        std::cout << "Data received: " << std::string(m_inboundBuffer.begin(), m_inboundBuffer.end()) << std::endl;
+        std::string archiveData(m_inboundBuffer.begin(), m_inboundBuffer.end());
+        std::istringstream archiveStream(archiveData);
+        boost::archive::text_iarchive archive(archiveStream);
+        Message* rawMsg(NULL);
+        archive >> rawMsg;
+        //std::shared_ptr<Message> msg(rawMsg);
+        auto msg = std::make_shared<ResourceRequest>("some url");
+
+        m_listener->onMessageReceived(*this, msg);
         beginReceive();
     }
     else
@@ -87,14 +79,21 @@ void CommonConnection::dataReceived(const boost::system::error_code &ec,
     }
 }
 
-size_t CommonConnection::write(SerializedMessage& serializedMessage)
+size_t CommonConnection::write(Message &message)
 {
-    std::cout << "Sending " << serializedMessage.getTypeDiscriminator() << std::endl;
-    serializedMessage.prepareForSend();
+    std::ostringstream archiveStream;
+    boost::archive::text_oarchive archive(archiveStream);
+    Message* rawMsg = &message;
+    archive << rawMsg;
+
+    std::string outboundData = archiveStream.str();
+
+    std::cout << "Sending " << outboundData << std::endl;
+    boost::array<size_t, 1> outboundDataSize;
+    outboundDataSize[0] = outboundData.size();
     std::vector<boost::asio::const_buffer> dataToSend;
-    dataToSend.push_back(boost::asio::buffer(serializedMessage.data_size));
-    dataToSend.push_back(boost::asio::buffer(serializedMessage.message_type));
-    dataToSend.push_back(boost::asio::buffer(serializedMessage.data));
+    dataToSend.push_back(boost::asio::buffer(outboundDataSize));
+    dataToSend.push_back(boost::asio::buffer(outboundData));
     return boost::asio::write(*m_socket, dataToSend);
 }
 

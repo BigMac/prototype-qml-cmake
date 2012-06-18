@@ -1,6 +1,7 @@
 #include "SimpleServer.h"
 #include "CommonConnection.h"
 #include "CommonConnectionListener.h"
+#include "MessageRegistry.h"
 #include "SerializedMessage.h"
 #include "Message.h"
 #include "messages/ResourceRequest.h"
@@ -11,13 +12,11 @@ class ServerConnectionListener : public CommonConnectionListener
 {
 public:
     virtual void onMessageReceived(CommonConnection& connection,
-                                   SerializedMessage& message)
+                                   std::shared_ptr<Message> message)
     {
         std::cout << "Message received " << std::endl;
-        MessageSerializer serializer;
-        auto deserializedMessage = serializer.deserialize(message);
         ResourceRequestHandler handler(connection);
-        deserializedMessage->accept(handler);
+        message->accept(handler);
     }
 
     virtual void onMessageReceivedErrror(CommonConnection& connection,

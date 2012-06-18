@@ -6,7 +6,7 @@
 
 SerializedMessage MessageSerializer::serialize(std::shared_ptr<Message> msg) const
 {
-    return msg->serialize();
+    return SerializedMessage();
 }
 
 std::shared_ptr<Message> MessageSerializer::deserialize(SerializedMessage &input) const

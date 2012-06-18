@@ -19,7 +19,6 @@ class MessageReceiver
 public:
     RECEIVES(ResourceRequest)
     RECEIVES(ResourceResponse)
-    RECEIVES(float)
 };
 
 #endif // MESSAGERECEIVER_H
