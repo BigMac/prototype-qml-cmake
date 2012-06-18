@@ -18,12 +18,12 @@ public:
 };
 
 template <typename Message_t>
-class MessageImplementation : public Message, public std::enable_shared_from_this<Message_t>
+class MessageImplementation : public Message
 {
 public:
     virtual void accept(MessageReceiver& receiver)
     {
-        receiver.receive(this->shared_from_this());
+        receiver.receive(static_cast<Message_t&>(*this));
         /* If you get a "no matching function for call to
          * ‘MessageReceiver::receive(std::shared_ptr<YourMessage>)’" error,
          * it means you forgot to add YourMessage  to MessageReceiver's list.

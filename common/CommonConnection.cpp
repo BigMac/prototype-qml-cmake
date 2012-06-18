@@ -67,9 +67,7 @@ void CommonConnection::dataReceived(const boost::system::error_code &ec,
         boost::archive::text_iarchive archive(archiveStream);
         Message* rawMsg(NULL);
         archive >> rawMsg;
-        //std::shared_ptr<Message> msg(rawMsg);
-        auto msg = std::make_shared<ResourceRequest>("some url");
-
+        std::shared_ptr<Message> msg(rawMsg);
         m_listener->onMessageReceived(*this, msg);
         beginReceive();
     }

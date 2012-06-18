@@ -8,7 +8,7 @@
  * done before overload resolution and we get amiguity. We need all these overloads
  * to be in MessageReceiver. */
 #define RECEIVES(Message_t) \
-virtual void receive(std::shared_ptr<Message_t>) { throw UnsupportedMessageReceived<Message_t>(); }
+virtual void receive(Message_t&) { throw UnsupportedMessageReceived<Message_t>(); }
 
 
 class ResourceRequest;
