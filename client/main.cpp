@@ -43,6 +43,22 @@ public:
 
 int main(int argc, char *argv[])
 {
+    std::shared_ptr<Message> msg(new ResourceRequest("some url"));
+    std::stringstream ss;
+    boost::archive::text_oarchive ar(ss);
+    //ar.register_type<ResourceRequest>();
+    Message* raw = msg.get();
+    ar << raw;
+
+    Message* deserialized = NULL;
+    std::istringstream iss(ss.str());
+    boost::archive::text_iarchive iar(iss);
+    //iar.register_type<ResourceRequest>();
+    iar >> deserialized;
+
+
+    std::cout << ss.str() << std::endl;
+
     auto listener = std::make_shared<MockListener>();
     ClientConnection connection;
     connection.connectToServer("127.0.0.1", listener);

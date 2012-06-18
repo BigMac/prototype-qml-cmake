@@ -3,9 +3,16 @@
 #include "MessageReceiver.h"
 #include "SerializedMessage.h"
 #include <memory>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/export.hpp>
 
 class Message
 {
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive &, const unsigned int){}
 public:
     virtual void accept(MessageReceiver& receiver) = 0;
     virtual SerializedMessage serialize() const = 0;

@@ -3,10 +3,22 @@
 #include "../Message.h"
 #include <vector>
 #include <string>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/string.hpp>
 
 class ResourceRequest;
 class ResourceResponse : public MessageImplementation<ResourceResponse>
 {
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int)
+    {
+        boost::serialization::base_object<Message>(*this);
+        ar & m_success;
+        ar & m_url;
+        ar & m_data;
+    }
+
 public:
     ResourceResponse();
     ResourceResponse(const ResourceRequest& request);

@@ -1,4 +1,4 @@
-find_package(Boost COMPONENTS system REQUIRED)
+find_package(Boost COMPONENTS system serialization REQUIRED)
 find_package(Threads)
 
 include_directories(${Boost_INCLUDE_DIRS}
