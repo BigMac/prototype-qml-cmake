@@ -1,11 +1,12 @@
 #ifndef COMMONCONNECTION_H
 #define COMMONCONNECTION_H
+#include "CommonApi.h"
 #include <boost/asio.hpp>
 #include <memory>
 
 class Message;
 class CommonConnectionListener;
-class CommonConnection : public std::enable_shared_from_this<CommonConnection>
+class DLL_SPEC CommonConnection : public std::enable_shared_from_this<CommonConnection>
 {
 public:
     typedef boost::asio::ip::tcp tcp;

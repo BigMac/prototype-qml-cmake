@@ -5,3 +5,6 @@ add_library(libcore
 	${SRCS}
 	${HDRS}
 )
+
+target_link_libraries(libcore
+	libcommon)
