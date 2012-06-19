@@ -1,6 +1,6 @@
 #ifndef RESOURCEREQUEST_H
 #define RESOURCEREQUEST_H
-#include "Message.h"
+#include "../Message.h"
 #include <string>
 #include <boost/serialization/string.hpp>
 
@@ -20,7 +20,5 @@ private:
     ResourceRequest();
     std::string m_url;
 };
-
-BOOST_CLASS_EXPORT_KEY(ResourceRequest)
 
 #endif // RESOURCEREQUEST_H

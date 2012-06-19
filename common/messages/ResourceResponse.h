@@ -1,6 +1,6 @@
 #ifndef RESOURCERESPONSE_H
 #define RESOURCERESPONSE_H
-#include "Message.h"
+#include "../Message.h"
 #include <vector>
 #include <string>
 #include <boost/serialization/vector.hpp>
@@ -33,7 +33,5 @@ private:
     std::string m_url;
     std::vector<char> m_data;
 };
-
-BOOST_CLASS_EXPORT_KEY(ResourceResponse)
 
 #endif // RESOURCERESPONSE_H

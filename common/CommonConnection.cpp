@@ -61,11 +61,7 @@ void CommonConnection::dataReceived(const boost::system::error_code &ec,
     {
         std::cout << "Data received: " << std::string(m_inboundBuffer.begin(), m_inboundBuffer.end()) << std::endl;
         std::string archiveData(m_inboundBuffer.begin(), m_inboundBuffer.end());
-        std::istringstream archiveStream(archiveData);
-        boost::archive::text_iarchive archive(archiveStream);
-        Message* rawMsg(NULL);
-        archive >> rawMsg;
-        std::shared_ptr<Message> msg(rawMsg);
+        auto msg = m_serializer.deserialize(archiveData);
         m_listener->onMessageReceived(*this, msg);
         beginReceive();
     }
@@ -77,12 +73,7 @@ void CommonConnection::dataReceived(const boost::system::error_code &ec,
 
 size_t CommonConnection::write(Message &message)
 {
-    std::ostringstream archiveStream;
-    boost::archive::text_oarchive archive(archiveStream);
-    Message* rawMsg = &message;
-    archive << rawMsg;
-
-    std::string outboundData = archiveStream.str();
+    std::string outboundData = m_serializer.serialize(message);
 
     std::cout << "Sending " << outboundData << std::endl;
     boost::array<size_t, 1> outboundDataSize;

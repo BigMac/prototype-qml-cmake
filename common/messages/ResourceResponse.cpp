@@ -2,8 +2,6 @@
 #include "ResourceRequest.h"
 #include <sstream>
 
-BOOST_CLASS_EXPORT_IMPLEMENT(ResourceResponse)
-
 ResourceResponse::ResourceResponse(const ResourceRequest &request) :
     m_success(false), m_url(request.getUrl())
 {

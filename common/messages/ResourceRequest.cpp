@@ -1,8 +1,6 @@
 #include "ResourceRequest.h"
 #include <cassert>
 
-BOOST_CLASS_EXPORT_IMPLEMENT(ResourceRequest)
-
 ResourceRequest::ResourceRequest()
 {
 }

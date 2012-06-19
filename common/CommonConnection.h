@@ -1,6 +1,7 @@
 #ifndef COMMONCONNECTION_H
 #define COMMONCONNECTION_H
 #include "CommonApi.h"
+#include "Serializer.h"
 #include <boost/asio.hpp>
 #include <memory>
 
@@ -29,6 +30,7 @@ protected:
     std::shared_ptr<CommonConnectionListener> m_listener;
     std::vector<size_t> m_inboundMessageSize;
     std::vector<char> m_inboundBuffer;
+    Serializer m_serializer;
     //std::string m_outboundData;
 };
 

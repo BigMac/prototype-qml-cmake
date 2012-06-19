@@ -9,7 +9,6 @@ file(GLOB HDRS *.h)
 
 link_directories ( ${Boost_LIBRARY_DIRS} )
 add_library(libcommon
-	SHARED
 	${SRCS}
 	${HDRS}
 )

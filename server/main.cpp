@@ -31,19 +31,6 @@ public:
 
 int main()
 {
-    std::shared_ptr<Message> msg(new ResourceRequest("some url"));
-    std::stringstream ss;
-    boost::archive::text_oarchive ar(ss);
-    //ar.register_type<ResourceRequest>();
-    Message* raw = msg.get();
-    ar << raw;
-
-    Message* deserialized = NULL;
-    std::istringstream iss(ss.str());
-    boost::archive::text_iarchive iar(iss);
-    //iar.register_type<ResourceRequest>();
-    iar >> deserialized;
-
     auto listener = std::make_shared<ServerConnectionListener>();
     SimpleServer server;
     server.startListening(listener);
