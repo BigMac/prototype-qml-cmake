@@ -11,7 +11,7 @@ public:
     virtual void onMessageReceived(CommonConnection& connection,
                                    std::shared_ptr<Message> message)
     {
-        std::cout << "Message received " << std::endl;
+        std::cout << "Message received, transaction id " << message->getTransactionId() << std::endl;
         ResourceRequestHandler handler(connection);
         message->accept(handler);
     }

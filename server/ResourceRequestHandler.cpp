@@ -16,5 +16,6 @@ void ResourceRequestHandler::receive(ResourceRequest& msg)
     dummyData.push_back('b');
     dummyData.push_back('g');
     response->setData(dummyData);
+    response->setTransactionId(msg.getTransactionId());
     m_connection.write(*response);
 }

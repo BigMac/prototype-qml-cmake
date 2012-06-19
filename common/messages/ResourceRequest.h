@@ -10,7 +10,7 @@ class ResourceRequest : public MessageImplementation<ResourceRequest>
     template<class Archive>
     void serialize(Archive & ar, const unsigned int)
     {
-        boost::serialization::base_object<Message>(*this);
+        ar & boost::serialization::base_object<Message>(*this);
         ar & m_url;
     }
 public:

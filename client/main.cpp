@@ -12,13 +12,14 @@ public:
     virtual void onMessageReceived(CommonConnection& connection,
                                    std::shared_ptr<Message> message)
     {
-        std::cout << "Message received " <<std::endl;
+        std::cout << "Message received " << std::endl;
     }
 
     virtual void onConnected(CommonConnection& connection)
     {
         std::cout << "Connected " << std::endl;
         auto message = std::make_shared<ResourceRequest>("http://some.url");
+        message->setTransactionId(122);
         connection.write(*message);
     }
     virtual void onMessageReceivedErrror(CommonConnection& connection,

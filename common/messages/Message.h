@@ -7,14 +7,25 @@
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/export.hpp>
 
+typedef uint32_t transactionId_t;
 class Message
 {
-    friend class boost::serialization::access;
-    template<class Archive>
-    void serialize(Archive &, const unsigned int){}
 public:
+    Message() : m_tid(0) {}
     virtual void accept(MessageReceiver& receiver) = 0;
     virtual ~Message() {}
+
+    void setTransactionId(transactionId_t id) { m_tid = id; }
+    transactionId_t getTransactionId() { return m_tid; }
+private:
+    transactionId_t m_tid;
+
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int)
+    {
+        ar & m_tid;
+    }
 };
 
 template <typename Message_t>
