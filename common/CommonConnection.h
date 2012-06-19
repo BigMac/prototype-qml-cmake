@@ -1,6 +1,6 @@
 #ifndef COMMONCONNECTION_H
 #define COMMONCONNECTION_H
-#include "Serializer.h"
+#include "messages/Serializer.h"
 #include <boost/asio.hpp>
 #include <memory>
 

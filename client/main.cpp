@@ -4,7 +4,7 @@
 #include "CommonConnectionListener.h"
 #include "CommonConnection.h"
 #include "messages/ResourceRequest.h"
-#include "Serializer.h"
+#include "messages/Serializer.h"
 
 class MockListener : public CommonConnectionListener
 {

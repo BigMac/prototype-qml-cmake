@@ -1,8 +1,8 @@
 #ifndef SERIALIZER_H
 #define SERIALIZER_H
 #include "Message.h"
-#include "messages/ResourceRequest.h"
-#include "messages/ResourceResponse.h"
+#include "ResourceRequest.h"
+#include "ResourceResponse.h"
 #include <string>
 #include <sstream>
 #include <memory>

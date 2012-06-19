@@ -1,6 +1,6 @@
 #ifndef RESOURCEREQUESTHANDLER_H
 #define RESOURCEREQUESTHANDLER_H
-#include "MessageReceiver.h"
+#include "messages/MessageReceiver.h"
 #include <memory>
 
 class CommonConnection;

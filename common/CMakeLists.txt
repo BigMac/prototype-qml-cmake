@@ -13,7 +13,6 @@ add_library(libcommon
 	${HDRS}
 )
 
-link_directories ( ${Boost_LIBRARY_DIRS} )
 add_definitions(-DBOOST_ALL_NO_LIB=1)
 
 add_subdirectory(messages)

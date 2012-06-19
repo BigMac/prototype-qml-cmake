@@ -1,7 +1,7 @@
 #include "SimpleServer.h"
 #include "CommonConnection.h"
 #include "CommonConnectionListener.h"
-#include "Message.h"
+#include "messages/Message.h"
 #include "messages/ResourceRequest.h"
 #include "ResourceRequestHandler.h"
 

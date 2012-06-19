@@ -1,6 +1,6 @@
 #include "CommonConnection.h"
 #include "CommonConnectionListener.h"
-#include "Message.h"
+#include "messages/Message.h"
 #include <cassert>
 
 CommonConnection::CommonConnection(std::shared_ptr<tcp::socket> socket,
