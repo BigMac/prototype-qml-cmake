@@ -12,6 +12,7 @@ CommonConnection::CommonConnection(std::shared_ptr<tcp::socket> socket,
 CommonConnection::~CommonConnection()
 {
     std::cout << "Disconnected" << std::endl;
+    if(m_listener) m_listener->onClose(*this);
 }
 
 void CommonConnection::registerListener(std::shared_ptr<CommonConnectionListener> listener)

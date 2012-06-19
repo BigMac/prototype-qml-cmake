@@ -26,6 +26,11 @@ public:
     {
         std::cout << "New connection" << std::endl;
     }
+
+    virtual void onClose(CommonConnection& connection) throw ()
+    {
+
+    }
 };
 
 

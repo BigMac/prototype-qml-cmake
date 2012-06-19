@@ -2,11 +2,14 @@
 #define COMMONCONNECTION_H
 #include "messages/Serializer.h"
 #include <boost/asio.hpp>
+#include <boost/noncopyable.hpp>
 #include <memory>
 
 class Message;
 class CommonConnectionListener;
-class CommonConnection : public std::enable_shared_from_this<CommonConnection>
+class CommonConnection :
+        public std::enable_shared_from_this<CommonConnection>,
+        private boost::noncopyable
 {
 public:
     typedef boost::asio::ip::tcp tcp;

@@ -13,6 +13,7 @@ public:
     virtual void onMessageReceivedErrror(CommonConnection& connection,
                                          const boost::system::error_code& ec) = 0;
     virtual void onConnected(CommonConnection& connection) = 0;
+    virtual void onClose(CommonConnection& connection) throw () = 0;
     virtual ~CommonConnectionListener() {}
 };
 

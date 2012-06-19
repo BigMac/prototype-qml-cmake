@@ -5,6 +5,7 @@
 typedef CommonConnection::tcp tcp;
 
 void ClientConnection::connectToServer(const std::string& address,
+                                       const std::string& port,
                                        std::shared_ptr<CommonConnectionListener> listener)
 {
     if(!listener)
@@ -13,7 +14,7 @@ void ClientConnection::connectToServer(const std::string& address,
         return;
     }
     tcp::resolver resolver(m_ioService);
-    tcp::resolver::query query(address, "6666");
+    tcp::resolver::query query(address, port);
     tcp::resolver::iterator endPointIterator = resolver.resolve(query);
     tcp::resolver::iterator end;
     boost::asio::io_service io_service;
@@ -21,8 +22,7 @@ void ClientConnection::connectToServer(const std::string& address,
     while (error && endPointIterator != end)
     {
         auto socket = std::make_shared<tcp::socket>(m_ioService);
-        socket->async_connect(//*endPointIterator,
-                               *endPointIterator++,
+        socket->async_connect(*endPointIterator++,
                                // Connection handler
                               std::bind(&ClientConnection::handleConnected,
                                         this,

@@ -27,6 +27,11 @@ public:
     {
         std::cout << "onMessageReceivedErrror " << ec.message() << std::endl;
     }
+
+    virtual void onClose(CommonConnection& connection) throw ()
+    {
+
+    }
 };
 
 int main(int argc, char *argv[])
@@ -34,7 +39,7 @@ int main(int argc, char *argv[])
 
     auto listener = std::make_shared<MockListener>();
     ClientConnection connection;
-    connection.connectToServer("127.0.0.1", listener);
+    connection.connectToServer("127.0.0.1", "6666", listener);
     connection.run();
 
     /*GuiEntryPoint entryPoint;

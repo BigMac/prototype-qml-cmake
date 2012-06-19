@@ -12,8 +12,8 @@ file(GLOB SRCS *.cpp)
 file(GLOB HDRS *.h)
 
 set(MOC_HDRS
-	InventoryGUI.h
-	FileNetworkReply.h
+	#InventoryGUI.h
+	#RepositoryNetworkReply.h
 )
 
 qt4_wrap_cpp(MOC_SRCS ${MOC_HDRS})
