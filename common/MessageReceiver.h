@@ -1,7 +1,6 @@
 #ifndef MESSAGERECEIVER_H
 #define MESSAGERECEIVER_H
 
-#include "CommonApi.h"
 #include "UnsupportedMessageReceived.h"
 #include <memory>
 
@@ -15,7 +14,7 @@ virtual void receive(Message_t&) { throw UnsupportedMessageReceived<Message_t>()
 class ResourceRequest;
 class ResourceResponse;
 
-class DLL_SPEC MessageReceiver
+class MessageReceiver
 {
 public:
     RECEIVES(ResourceRequest)
