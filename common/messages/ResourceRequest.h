@@ -11,13 +11,16 @@ class ResourceRequest : public MessageImplementation<ResourceRequest>
     void serialize(Archive & ar, const unsigned int)
     {
         ar & boost::serialization::base_object<Message>(*this);
+        ar & m_resourceIsBinary;
         ar & m_url;
     }
 public:
-    ResourceRequest(const std::string& url);
+    ResourceRequest(const std::string& url, bool binary = false);
     const std::string& getUrl() const;
+    bool isResourceBinary() { return m_resourceIsBinary; }
 private:
     ResourceRequest();
+    bool m_resourceIsBinary;
     std::string m_url;
 };
 

@@ -5,8 +5,8 @@ ResourceRequest::ResourceRequest()
 {
 }
 
-ResourceRequest::ResourceRequest(const std::string& url)
-    : m_url(url)
+ResourceRequest::ResourceRequest(const std::string& url, bool binary)
+    : m_resourceIsBinary(binary), m_url(url)
 {
 }
 

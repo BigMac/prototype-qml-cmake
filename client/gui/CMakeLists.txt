@@ -16,13 +16,6 @@ set(MOC_HDRS
 	FileNetworkReply.h
 )
 
-set(QML_DIR
-	qml
-)
-
-file(GLOB_RECURSE QML_FILES ${QML_DIR}/*.qml)
-file(GLOB_RECURSE QMLDIR_FILES ${QML_DIR}/*qmldir)
-
 qt4_wrap_cpp(MOC_SRCS ${MOC_HDRS})
 
 add_definitions(${QT_DEFINITIONS})
@@ -30,14 +23,7 @@ add_library(libgui
 	${SRCS}
 	${HDRS}
 	${MOC_SRCS}
-	${QML_FILES} #This is so they're visible in a generated project
-	${QMLDIR_FILES}
 )
 target_link_libraries(libgui
 		${QT_LIBRARIES}
 )
-add_custom_target(copyqml ALL
-	COMMENT "Copying qmls"
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/${QML_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${QML_DIR}
-)
-add_dependencies(libgui copyqml)

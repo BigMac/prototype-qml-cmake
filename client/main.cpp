@@ -18,7 +18,7 @@ public:
     virtual void onConnected(CommonConnection& connection)
     {
         std::cout << "Connected " << std::endl;
-        auto message = std::make_shared<ResourceRequest>("http://some.url");
+        auto message = std::make_shared<ResourceRequest>("resources/qml/main.qml");
         message->setTransactionId(122);
         connection.write(*message);
     }
