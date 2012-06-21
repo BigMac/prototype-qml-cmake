@@ -1,0 +1,13 @@
+#ifndef DISPATCHER_H
+#define DISPATCHER_H
+#include <memory>
+
+class Event;
+class Dispatcher : public std::enable_shared_from_this<Dispatcher>
+{
+public:
+    Dispatcher();
+    void post(std::shared_ptr<const Event> event);
+};
+
+#endif // DISPATCHER_H

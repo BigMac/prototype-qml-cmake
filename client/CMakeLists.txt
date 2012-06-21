@@ -14,6 +14,7 @@ add_executable(client
 	${SRCS}
 	${HDRS}
 )
+
 target_link_libraries(client
 	libcore
 	libgui

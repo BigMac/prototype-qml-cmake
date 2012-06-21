@@ -1,5 +1,4 @@
 #include "gui/GuiEntryPoint.h"
-#include "core/InventoryCore.h"
 #include "core/ClientConnection.h"
 #include "CommonConnectionListener.h"
 #include "CommonConnection.h"

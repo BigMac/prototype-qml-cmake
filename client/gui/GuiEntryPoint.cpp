@@ -1,6 +1,5 @@
 #include "GuiEntryPoint.h"
 #include "InventoryGUI.h"
-#include "core/InventoryCore.h"
 #include "LocalNetworkAccessManager.h"
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>

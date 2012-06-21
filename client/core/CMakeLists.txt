@@ -6,5 +6,8 @@ add_library(libcore
 	${HDRS}
 )
 
+add_subdirectory(events)
+
 target_link_libraries(libcore
-	libcommon)
+        libcommon
+	libevents)
