@@ -17,7 +17,7 @@ class EventImplementation : public Event, public std::enable_shared_from_this<Me
 public:
     virtual void executeCallbacks(EventRegistry& registry)
     {
-        auto callbacks = registry.Register<Message_t>::getCallbacks();
+        auto callbacks = registry.Record<Message_t>::getCallbacks();
         for(auto i = callbacks.begin(); i != callbacks.end(); ++i)
         {
             (*i)(this->shared_from_this());
