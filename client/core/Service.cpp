@@ -3,7 +3,7 @@
 #include "events/Event.h"
 #include <algorithm>
 
-Service::Service(std::weak_ptr<Dispatcher> dispatcher) :
+Service::Service(std::shared_ptr<Dispatcher> dispatcher) :
     m_running(false), m_dispatcher(dispatcher)
 {}
 
@@ -14,6 +14,7 @@ void Service::post(Service::EventConstSp event)
 
 void Service::run()
 {
+    preRun();
     m_running = true;
     while(m_running)
     {
@@ -30,6 +31,6 @@ void Service::stop()
 
 void Service::submit(EventConstSp event)
 {
-    m_dispatcher.lock()->post(event);
+    m_dispatcher->post(event);
 }
 

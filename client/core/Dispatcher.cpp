@@ -7,5 +7,5 @@ Dispatcher::Dispatcher()
 
 void Dispatcher::post(std::shared_ptr<const Event> event)
 {
-    event->executeCallbacks(*this);
+    event->executeCallbacks(shared_from_this());
 }
