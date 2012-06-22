@@ -9,7 +9,7 @@ class CommonConnectionListener;
 class ClientConnection
 {
 public:
-    void connectToServer(const std::string& address, // TODO address is ignored
+    void connectToServer(const std::string& address,
                          std::shared_ptr<CommonConnectionListener> listener);
     void run();
 private:

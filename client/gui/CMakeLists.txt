@@ -4,15 +4,13 @@ include(${QT_USE_FILE})
 
 include_directories(
 	${QT_INCLUDE_DIR}
-	#TODO rethink the entry point thing.
-	.. #this is only here so that GuiEntryPoint can see core/InventoryCore
+	..
 )
 
 file(GLOB SRCS *.cpp)
 file(GLOB HDRS *.h)
 
 set(MOC_HDRS
-	InventoryGUI.h
 	FileNetworkReply.h
 )
 
