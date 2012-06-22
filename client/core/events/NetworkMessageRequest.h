@@ -2,10 +2,10 @@
 #define NETWORKREQUEST_H
 #include "Event.h"
 
-class NetworkRequest : public EventImplementation<NetworkRequest>
+class NetworkMessageRequest : public EventImplementation<NetworkMessageRequest>
 {
 public:
-    NetworkRequest();
+    NetworkMessageRequest();
 };
 
 #endif // NETWORKREQUEST_H

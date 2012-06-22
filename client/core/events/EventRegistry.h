@@ -4,8 +4,10 @@
 #include <memory>
 #include <vector>
 
-class NetworkRequest;
-class QmlRequest;
+class GuiResourceRequest;
+class GuiResourceResponse;
+class NetworkMessageRequest;
+class NetworkMessageResponse;
 
 template<typename T>
 class Record
@@ -19,8 +21,10 @@ private:
 };
 
 class EventRegistry :
-        public Record<NetworkRequest>,
-        public Record<QmlRequest>
+        public Record<GuiResourceRequest>,
+        public Record<GuiResourceResponse>,
+        public Record<NetworkMessageRequest>,
+        public Record<NetworkMessageResponse>
 {
 };
 

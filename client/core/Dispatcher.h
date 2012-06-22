@@ -10,7 +10,7 @@ class Dispatcher :
 {
 public:
     Dispatcher();
-    void post(std::shared_ptr<const Event> event);
+    virtual void post(std::shared_ptr<const Event> event);
 };
 
 #endif // DISPATCHER_H
