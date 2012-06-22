@@ -1,24 +1,23 @@
 #ifndef SERVICE_H
 #define SERVICE_H
+#include "IService.h"
 #include <cstdint>
-#include <memory>
 #include <boost/circular_buffer.hpp>
 #include <boost/thread.hpp>
 
 class Dispatcher;
-class Event;
-class Service
+class Service : public IService
 {
 public:
     Service();
     Service(std::weak_ptr<Dispatcher> dispatcher);
     typedef std::shared_ptr<const Event> EventConstSp;
-    void post(EventConstSp event);
-    void run();
+    virtual void post(EventConstSp event);
+    virtual void run();
 protected:
-    void stop();
-    EventConstSp tryPopEvent();
-    void submit(EventConstSp event);
+    virtual void stop();
+    virtual EventConstSp tryPopEvent();
+    virtual void submit(EventConstSp event);
     virtual uint32_t handleEvent(EventConstSp event) = 0;
 
     boost::thread m_thread;
