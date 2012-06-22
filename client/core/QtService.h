@@ -27,7 +27,7 @@ private:
     void registerInternalCallback()
     {
         m_eventRegistry->Record<EventType>::registerCallback(
-                    [&](std::shared_ptr<const EventType> evt) { process_event(evt); });
+                    [&](std::shared_ptr<const EventType> evt) { process_event(*evt); });
     }
 };
 

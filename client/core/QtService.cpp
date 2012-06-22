@@ -11,7 +11,7 @@ QtService::QtService(std::shared_ptr<Dispatcher> dispatcher) :
 
 void QtService::registerReceivedEventTypes(std::shared_ptr<Dispatcher> dispatcher)
 {
-    dispatcher->registerReceiver<GuiResourceResponse>(*this);
+    //dispatcher->registerReceiver<GuiResourceResponse>(*this);
 }
 
 
