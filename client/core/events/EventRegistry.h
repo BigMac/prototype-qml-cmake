@@ -11,7 +11,7 @@ template<typename T>
 class Record
 {
 public:
-    typedef std::function<bool(std::shared_ptr<const T>)> CallbackFunction_t;
+    typedef std::function<void(std::shared_ptr<const T>)> CallbackFunction_t;
     void registerCallback(CallbackFunction_t callback) { m_callbacks.push_back(callback); }
     const std::vector<CallbackFunction_t>& getCallbacks() { return m_callbacks; }
 private:
