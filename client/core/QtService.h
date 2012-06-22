@@ -24,9 +24,9 @@ protected:
 
 private:
     template<typename EventType>
-    void registerInternalCallback(EventRegistry& registry)
+    void registerInternalCallback()
     {
-        m_eventRegistry.Record<EventType>::registerCallback(
+        m_eventRegistry->Record<EventType>::registerCallback(
                     [&](std::shared_ptr<const EventType> evt) { process_event(evt); });
     }
 };
