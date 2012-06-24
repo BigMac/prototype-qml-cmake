@@ -10,6 +10,7 @@ class Service : public IService
 {
 public:
     Service(std::shared_ptr<Dispatcher> dispatcher);
+    virtual ~Service() {}
     typedef std::shared_ptr<const Event> EventConstSp;
     virtual void post(EventConstSp event);
     virtual void run();

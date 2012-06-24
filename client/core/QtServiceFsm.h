@@ -11,6 +11,7 @@
 #include "events/GuiResourceRequest.h"
 #include "events/GuiResourceResponse.h"
 #include "events/OpenInterfaceWindowRequest.h"
+#include "QtService.h"
 #include <functional>
 
 #include <iostream> // TODO remove when done with debug logging
@@ -27,6 +28,8 @@ using namespace boost::msm::front;
 
 struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
 {
+    QtServiceFsm(QtService* service) : service(service) {}
+    QtService* const service;
     // States
     struct StateInitial : public boost::msm::front::state<>
     {
@@ -75,7 +78,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         {
             LOG_ACTION(SendGuiResourceRequest)
             std::string url = evt.getUrl();
-//            send(std::make_shared<GuiResourceRequest>(url));
+            fsm.service->submit(std::make_shared<GuiResourceRequest>(url));
         }
     };
 
@@ -84,7 +87,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         template <class Fsm,class Evt,class SourceState,class TargetState>
         void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
         {
-            LOG_ACTION(SendGuiResourceRequest)
+            LOG_ACTION(Repaint)
         }
     };
 
@@ -93,7 +96,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         template <class Fsm,class Evt,class SourceState,class TargetState>
         void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
         {
-//            send(std::make_shared<DrawBufferRequest>());
+            fsm.service->submit(std::make_shared<DrawBufferRequest>());
         }
     };
     struct StartRendering
@@ -101,7 +104,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         template <class Fsm,class Evt,class SourceState,class TargetState>
         void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
         {
-            LOG_ACTION(SendGuiResourceRequest)
+            LOG_ACTION(StartRendering)
         }
     };
 
@@ -110,7 +113,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         template <class Fsm,class Evt,class SourceState,class TargetState>
         void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
         {
-            LOG_ACTION(SendGuiResourceRequest)
+            LOG_ACTION(RegisterResourceListener)
         }
     };
 

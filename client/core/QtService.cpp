@@ -3,11 +3,22 @@
 #include "Dispatcher.h"
 #include "events/Event.h"
 
+#define REGISTER_INTERNAL_CALLBACK(EventType) \
+        m_eventRegistry->Record<EventType>::registerCallback( \
+                    [&](std::shared_ptr<const EventType> evt) { m_fsm->process_event(*evt); });
+
 QtService::QtService(std::shared_ptr<Dispatcher> dispatcher) :
-    Service(dispatcher), m_eventRegistry(std::make_shared<EventRegistry>())
+    Service(dispatcher),
+    m_eventRegistry(std::make_shared<EventRegistry>()),
+    m_fsm(new QtFsm(this))
 {
-    registerInternalCallback<GuiResourceResponse>();
-    registerInternalCallback<OpenInterfaceWindowRequest>();
+    REGISTER_INTERNAL_CALLBACK(GuiResourceResponse)
+    REGISTER_INTERNAL_CALLBACK(OpenInterfaceWindowRequest)
+}
+
+QtService::~QtService()
+{
+    // Empty implementation needed so that std::unique_ptr has complete type
 }
 
 void QtService::registerReceivedEventTypes(std::shared_ptr<Dispatcher> dispatcher)
@@ -24,5 +35,5 @@ uint32_t QtService::handleEvent(EventConstSp event)
 
 void QtService::preRun()
 {
-    m_fsm.start();
+    m_fsm->start();
 }

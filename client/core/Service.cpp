@@ -35,6 +35,7 @@ void Service::stop()
 
 void Service::submit(EventConstSp event)
 {
+    std::cout << "Submit called"<< std::endl;
     m_dispatcher->post(event);
 }
 

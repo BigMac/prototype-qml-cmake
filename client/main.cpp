@@ -6,6 +6,8 @@
 #include "messages/Serializer.h"
 #include "core/QtService.h"
 #include "core/Dispatcher.h"
+#include "core/events/OpenInterfaceWindowRequest.h"
+#include "core/events/GuiResourceResponse.h"
 
 class MockListener : public CommonConnectionListener
 {
@@ -35,6 +37,7 @@ int main(int argc, char *argv[])
     auto dispatcher = std::make_shared<Dispatcher>();
     auto service = std::make_shared<QtService>(dispatcher);
     service->post(std::make_shared<OpenInterfaceWindowRequest>("resources/qml/main.qml"));
+    service->post(std::make_shared<GuiResourceResponse>());
     service->run();
 
 //    auto listener = std::make_shared<MockListener>();
