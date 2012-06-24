@@ -1,12 +1,11 @@
 #include "QtService.h"
 #include "Dispatcher.h"
-#include "events/GuiResourceResponse.h"
 #include "events/Event.h"
 
 QtService::QtService(std::shared_ptr<Dispatcher> dispatcher) :
     Service(dispatcher), m_eventRegistry(std::make_shared<EventRegistry>())
 {
-    registerInternalCallback<GuiResourceResponse>();
+    //registerInternalCallback<GuiResourceResponse>();
 }
 
 void QtService::registerReceivedEventTypes(std::shared_ptr<Dispatcher> dispatcher)

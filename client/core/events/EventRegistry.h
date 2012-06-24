@@ -4,10 +4,14 @@
 #include <memory>
 #include <vector>
 
+class DrawBufferReleased;
+class DrawBufferRequest;
+class DrawBufferResponse;
 class GuiResourceRequest;
 class GuiResourceResponse;
 class NetworkMessageRequest;
 class NetworkMessageResponse;
+class OpenInterfaceWindowRequest;
 
 template<typename T>
 class Record
@@ -22,10 +26,14 @@ private:
 };
 
 class EventRegistry :
+        public Record<DrawBufferReleased>,
+        public Record<DrawBufferRequest>,
+        public Record<DrawBufferResponse>,
         public Record<GuiResourceRequest>,
         public Record<GuiResourceResponse>,
         public Record<NetworkMessageRequest>,
-        public Record<NetworkMessageResponse>
+        public Record<NetworkMessageResponse>,
+        public Record<OpenInterfaceWindowRequest>
 {
 };
 

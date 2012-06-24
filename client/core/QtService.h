@@ -1,10 +1,9 @@
 #ifndef QTSERVICE_H
 #define QTSERVICE_H
 #include "Service.h"
-#include "QtServiceFsm.h"
 #include "ConcurrentQueue.h"
-#include "events/EventRegistry.h"
 #include <boost/msm/back/state_machine.hpp>
+#include "QtServiceFsm.h"
 
 struct QtServiceFsm;
 class Dispatcher;
