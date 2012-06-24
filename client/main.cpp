@@ -4,6 +4,8 @@
 #include "CommonConnection.h"
 #include "messages/ResourceRequest.h"
 #include "messages/Serializer.h"
+#include "core/QtService.h"
+#include "core/Dispatcher.h"
 
 class MockListener : public CommonConnectionListener
 {
@@ -30,11 +32,15 @@ public:
 
 int main(int argc, char *argv[])
 {
+    auto dispatcher = std::make_shared<Dispatcher>();
+    auto service = std::make_shared<QtService>(dispatcher);
+    service->post(std::make_shared<OpenInterfaceWindowRequest>("resources/qml/main.qml"));
+    service->run();
 
-    auto listener = std::make_shared<MockListener>();
-    ClientConnection connection;
-    connection.connectToServer("127.0.0.1", listener);
-    connection.run();
+//    auto listener = std::make_shared<MockListener>();
+//    ClientConnection connection;
+//    connection.connectToServer("127.0.0.1", listener);
+//    connection.run();
 
     /*GuiEntryPoint entryPoint;
     std::shared_ptr<InventoryCore> core = std::make_shared<InventoryCore>();

@@ -1,5 +1,4 @@
-#ifndef DRAWBUFFERRELEASED_H
-#define DRAWBUFFERRELEASED_H
+#pragma once
 #include "Event.h"
 
 class DrawBufferReleased : public EventImplementation<DrawBufferReleased>
@@ -7,4 +6,3 @@ class DrawBufferReleased : public EventImplementation<DrawBufferReleased>
 public:
     DrawBufferReleased(/* pointer to buffer? */);
 };
-#endif // DRAWBUFFERRELEASED_H

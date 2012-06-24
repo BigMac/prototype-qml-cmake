@@ -11,6 +11,17 @@
 #include "events/GuiResourceRequest.h"
 #include "events/GuiResourceResponse.h"
 #include "events/OpenInterfaceWindowRequest.h"
+#include <functional>
+
+#include <iostream> // TODO remove when done with debug logging
+
+#define LOG_STATE(State) \
+    template <class Event,class FSM> \
+    void on_entry(Event const& ,FSM&) {std::cout << "entering: "<< #State << std::endl;} \
+    template <class Event,class FSM> \
+    void on_exit(Event const&,FSM& ) {std::cout << "leaving: "<< #State << std::endl;}
+#define LOG_ACTION(Action) \
+    std::cout << "Action: " << #Action << std::endl;
 
 using namespace boost::msm::front;
 
@@ -18,21 +29,30 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
 {
     // States
     struct StateInitial : public boost::msm::front::state<>
-    {};
+    {
+        LOG_STATE(StateInitial)
+    };
 
     struct StateIdle : public boost::msm::front::state<>
-    {};
+    {
+        LOG_STATE(StateIdle)
+    };
 
     struct StatedDrawBufferRequested : public boost::msm::front::state<>
-    {};
+    {
+        LOG_STATE(StatedDrawBufferRequested)
+    };
 
     struct StateQmlRequested : public boost::msm::front::state<>
     {
+        LOG_STATE(StateQmlRequested)
         std::string requestedUrl;
     };
 
     struct StateRenderingQml : public boost::msm::front::state<>
-    {};
+    {
+        LOG_STATE(StateRenderingQml)
+    };
 
     // Events, in addition to common client events
     struct ResourceNeeded
@@ -53,8 +73,9 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         template <class Fsm,class Evt,class SourceState,class TargetState>
         void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
         {
+            LOG_ACTION(SendGuiResourceRequest)
             std::string url = evt.getUrl();
-            fsm->submit(GuiResourceRequest(url));
+//            send(std::make_shared<GuiResourceRequest>(url));
         }
     };
 
@@ -63,8 +84,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         template <class Fsm,class Evt,class SourceState,class TargetState>
         void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
         {
-//            std::string url = evt.getUrl();
-//            fsm->submit(GuiResourceRequest(url));
+            LOG_ACTION(SendGuiResourceRequest)
         }
     };
 
@@ -73,7 +93,24 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         template <class Fsm,class Evt,class SourceState,class TargetState>
         void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
         {
-            fsm->submit(DrawBufferRequest());
+//            send(std::make_shared<DrawBufferRequest>());
+        }
+    };
+    struct StartRendering
+    {
+        template <class Fsm,class Evt,class SourceState,class TargetState>
+        void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
+        {
+            LOG_ACTION(SendGuiResourceRequest)
+        }
+    };
+
+    struct RegisterResourceListener
+    {
+        template <class Fsm,class Evt,class SourceState,class TargetState>
+        void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
+        {
+            LOG_ACTION(SendGuiResourceRequest)
         }
     };
 
@@ -98,14 +135,34 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         }
     };
 
+    struct GuiResourceResponseOk
+    {
+        template <class Fsm,class Evt,class SourceState,class TargetState>
+        bool operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
+        {
+            //fsm->submit(DrawBufferRequest);
+            return true; // TEMP
+        }
+    };
+
+    template<typename First, typename Second>
+    class Seq2 : public ActionSequence_< boost::mpl::vector<First, Second> > {};
+
     // Transition table
     struct transition_table : boost::mpl::vector<
             Row< StateInitial, none, StateIdle, none, none >,
+            Row< StateInitial, OpenInterfaceWindowRequest, StateIdle, StartRendering, none >,
+
             Row< StateIdle, OpenInterfaceWindowRequest, StateQmlRequested, SendGuiResourceRequest, none >,
-            Row< StateIdle, DrawBufferNeeded, StatedDrawBufferRequested, SendDrawBufferRequest, none >,
+            Row< StateIdle, DrawBufferNeeded,   StatedDrawBufferRequested, SendDrawBufferRequest, none >,
+
             Row< StatedDrawBufferRequested, DrawBufferResponse, StateIdle, Repaint, DrawBufferResponseOk >,
-            Row< StatedDrawBufferRequested, DrawBufferResponse, StateIdle, none, Not<DrawBufferResponseOk> >,
-            Row< StateQmlRequested, OpenInterfaceWindowRequest, StateQmlRequested, SendGuiResourceRequest, none >
+            Row< StatedDrawBufferRequested, DrawBufferResponse, StateIdle, none,    Not<DrawBufferResponseOk> >, // Need proper error handling
+
+            Row< StateQmlRequested, GuiResourceResponse, StateRenderingQml, StartRendering, GuiResourceResponseOk >,
+            Row< StateQmlRequested, GuiResourceResponse, StateIdle, none, Not<GuiResourceResponseOk> >, // Need proper error handling
+
+            Row< StateRenderingQml, ResourceNeeded, StateRenderingQml, Seq2<SendGuiResourceRequest, RegisterResourceListener>, none >
             >{};
 
     typedef StateInitial initial_state;

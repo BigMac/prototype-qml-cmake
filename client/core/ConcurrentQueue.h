@@ -1,7 +1,7 @@
 #ifndef CONCURRENTQUEUE_H
 #define CONCURRENTQUEUE_H
 #include <memory>
-#include <boost/circular_buffer.hpp>
+#include <vector>
 #include <boost/thread.hpp>
 
 template<typename T>
@@ -22,12 +22,12 @@ public:
         if(beginIter == m_queue.end())
             return ItemSharedPtr(); // Nothing on the queue
         auto result = *beginIter;
-        m_queue.pop_front();
+        m_queue.erase(beginIter);
         return result;
     }
 
 protected:
-    typedef boost::circular_buffer_space_optimized<std::shared_ptr<T> > Queue;
+    typedef std::vector<std::shared_ptr<T> > Queue;
     Queue m_queue;
     boost::mutex m_queueMutex;
 };

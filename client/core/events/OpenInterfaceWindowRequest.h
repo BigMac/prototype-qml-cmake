@@ -1,5 +1,4 @@
-#ifndef OPENINTERFACEWINDOWREQUEST_H
-#define OPENINTERFACEWINDOWREQUEST_H
+#pragma once
 #include "Event.h"
 #include <string>
 
@@ -7,10 +6,9 @@ class OpenInterfaceWindowRequest : public EventImplementation<OpenInterfaceWindo
 {
 public:
     OpenInterfaceWindowRequest(const std::string& requestedQml);
-    const std::string& getRequestedQml() { return m_requestedQml; }
+    const std::string& getUrl() const { return m_requestedQml; }
 
 private:
     std::string m_requestedQml;
 };
 
-#endif // OPENINTERFACEWINDOWREQUEST_H

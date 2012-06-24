@@ -1,5 +1,4 @@
-#ifndef QMLREQUEST_H
-#define QMLREQUEST_H
+#pragma once
 #include "Event.h"
 #include <string>
 
@@ -10,5 +9,3 @@ public:
 private:
     std::string m_url;
 };
-
-#endif // QMLREQUEST_H

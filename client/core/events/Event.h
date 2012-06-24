@@ -1,5 +1,4 @@
-#ifndef EVENT_H
-#define EVENT_H
+#pragma once
 #include "EventRegistry.h"
 #include <algorithm>
 #include <memory>
@@ -25,5 +24,3 @@ public:
         return !callbacks.empty();
     }
 };
-
-#endif // EVENT_H

@@ -1,5 +1,4 @@
-#ifndef EVENTREGISTRY_H
-#define EVENTREGISTRY_H
+#pragma once
 #include <functional>
 #include <memory>
 #include <vector>
@@ -36,5 +35,3 @@ class EventRegistry :
         public Record<OpenInterfaceWindowRequest>
 {
 };
-
-#endif // EVENTREGISTRY_H

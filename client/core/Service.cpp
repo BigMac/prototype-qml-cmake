@@ -14,6 +14,8 @@ void Service::post(Service::EventConstSp event)
 
 void Service::run()
 {
+    auto thread = boost::thread([&]()
+    {
     preRun();
     m_running = true;
     while(m_running)
@@ -22,6 +24,8 @@ void Service::run()
         if(event)
             handleEvent(event);
     }
+    });
+    thread.join();
 }
 
 void Service::stop()

@@ -1,16 +1,18 @@
 #include "QtService.h"
+#include "QtServiceFsm.h"
 #include "Dispatcher.h"
 #include "events/Event.h"
 
 QtService::QtService(std::shared_ptr<Dispatcher> dispatcher) :
     Service(dispatcher), m_eventRegistry(std::make_shared<EventRegistry>())
 {
-    //registerInternalCallback<GuiResourceResponse>();
+    registerInternalCallback<GuiResourceResponse>();
+    registerInternalCallback<OpenInterfaceWindowRequest>();
 }
 
 void QtService::registerReceivedEventTypes(std::shared_ptr<Dispatcher> dispatcher)
 {
-    //dispatcher->registerReceiver<GuiResourceResponse>(*this);
+    dispatcher->registerReceiver<GuiResourceResponse>(*this);
 }
 
 
@@ -22,5 +24,5 @@ uint32_t QtService::handleEvent(EventConstSp event)
 
 void QtService::preRun()
 {
-    start();
+    m_fsm.start();
 }

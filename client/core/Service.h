@@ -18,7 +18,6 @@ protected:
     virtual void submit(EventConstSp event);
     virtual void preRun() = 0;
     virtual uint32_t handleEvent(EventConstSp event) = 0;
-    boost::thread m_thread;
     bool m_running;
     std::shared_ptr<Dispatcher> m_dispatcher;
     ConcurrentQueue<const Event> m_queue;
