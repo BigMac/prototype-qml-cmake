@@ -12,6 +12,7 @@
 #include "events/GuiResourceResponse.h"
 #include "events/OpenInterfaceWindowRequest.h"
 #include "Dispatcher.h"
+#include "QmlRenderer.h"
 #include <functional>
 
 #include <iostream> // TODO remove when done with debug logging
@@ -28,8 +29,14 @@ using namespace boost::msm::front;
 
 struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
 {
-    QtServiceFsm(std::shared_ptr<Dispatcher> dispatcher) : dispatcher(dispatcher) {}
+    QtServiceFsm(std::shared_ptr<Dispatcher> dispatcher,
+                 std::shared_ptr<QmlRenderer> renderer) :
+        dispatcher(dispatcher),
+        renderer(renderer)
+    {}
+
     std::shared_ptr<Dispatcher> dispatcher;
+    std::shared_ptr<QmlRenderer> renderer;
 
     // States
     struct StateInitial : public boost::msm::front::state<>

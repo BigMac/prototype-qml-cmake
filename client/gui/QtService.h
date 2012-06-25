@@ -6,6 +6,7 @@
 #include <boost/msm/back/state_machine.hpp>
 #include "QtServiceFsm.h"
 
+class QmlRenderer;
 class Dispatcher;
 class QtService :
         public Service,
@@ -13,7 +14,8 @@ class QtService :
         public std::enable_shared_from_this<QtService>
 {
 public:
-    QtService(std::shared_ptr<Dispatcher> dispatcher);
+    QtService(std::shared_ptr<Dispatcher> dispatcher,
+              std::shared_ptr<QmlRenderer> renderer);
     ~QtService();
     virtual void registerReceivedEventTypes(std::shared_ptr<Dispatcher> dispatcher);
 protected:

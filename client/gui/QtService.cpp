@@ -2,8 +2,9 @@
 #include "Dispatcher.h"
 #include "events/Event.h"
 
-QtService::QtService(std::shared_ptr<Dispatcher> dispatcher) :
-    boost::msm::back::state_machine<QtServiceFsm>(dispatcher),
+QtService::QtService(std::shared_ptr<Dispatcher> dispatcher,
+                     std::shared_ptr<QmlRenderer> renderer) :
+    boost::msm::back::state_machine<QtServiceFsm>(dispatcher, renderer),
     m_eventRegistry(std::make_shared<EventRegistry>())
 {
     registerInternalCallback<GuiResourceResponse>();

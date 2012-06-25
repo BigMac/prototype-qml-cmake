@@ -4,6 +4,7 @@
 #include "CommonConnection.h"
 #include "messages/ResourceRequest.h"
 #include "messages/Serializer.h"
+#include "gui/QtServiceFactory.h"
 #include "gui/QtService.h"
 #include "Dispatcher.h"
 #include "events/OpenInterfaceWindowRequest.h"
@@ -35,7 +36,7 @@ public:
 int main(int argc, char *argv[])
 {
     auto dispatcher = std::make_shared<Dispatcher>();
-    auto service = std::make_shared<QtService>(dispatcher);
+    auto service = QtServiceFactory::create(dispatcher);
     service->post(std::make_shared<OpenInterfaceWindowRequest>("resources/qml/main.qml"));
     service->post(std::make_shared<GuiResourceResponse>());
     service->run();
