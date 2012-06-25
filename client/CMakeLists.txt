@@ -4,6 +4,7 @@ file(GLOB SRCS *.cpp)
 file(GLOB HDRS *.h)
 
 include_directories(
+	.
 	../common
 	${Boost_INCLUDE_DIRS})
 add_definitions(-DBOOST_ALL_NO_LIB=1)

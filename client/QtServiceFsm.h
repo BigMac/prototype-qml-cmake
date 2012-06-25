@@ -11,7 +11,7 @@
 #include "events/GuiResourceRequest.h"
 #include "events/GuiResourceResponse.h"
 #include "events/OpenInterfaceWindowRequest.h"
-#include "QtService.h"
+#include "Dispatcher.h"
 #include <functional>
 
 #include <iostream> // TODO remove when done with debug logging
@@ -28,8 +28,9 @@ using namespace boost::msm::front;
 
 struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
 {
-    QtServiceFsm(QtService* service) : service(service) {}
-    QtService* const service;
+    QtServiceFsm(std::shared_ptr<Dispatcher> dispatcher) : dispatcher(dispatcher) {}
+    std::shared_ptr<Dispatcher> dispatcher;
+
     // States
     struct StateInitial : public boost::msm::front::state<>
     {
@@ -78,7 +79,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         {
             LOG_ACTION(SendGuiResourceRequest)
             std::string url = evt.getUrl();
-            fsm.service->submit(std::make_shared<GuiResourceRequest>(url));
+            fsm.dispatcher->post(std::make_shared<GuiResourceRequest>(url));
         }
     };
 
@@ -96,7 +97,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
         template <class Fsm,class Evt,class SourceState,class TargetState>
         void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
         {
-            fsm.service->submit(std::make_shared<DrawBufferRequest>());
+            fsm.dispatcher->post(std::make_shared<DrawBufferRequest>());
         }
     };
     struct StartRendering

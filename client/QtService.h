@@ -22,7 +22,6 @@ protected:
     std::shared_ptr<EventRegistry> m_eventRegistry;
     typedef boost::msm::back::state_machine<QtServiceFsm> QtFsm;
     std::unique_ptr<QtFsm> m_fsm;
-    friend class QtServiceFsm;
 
 private:
 };

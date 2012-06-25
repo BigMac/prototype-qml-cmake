@@ -3,8 +3,8 @@
 #include "events/Event.h"
 #include <algorithm>
 
-Service::Service(std::shared_ptr<Dispatcher> dispatcher) :
-    m_running(false), m_dispatcher(dispatcher)
+Service::Service() :
+    m_running(false)
 {}
 
 void Service::post(Service::EventConstSp event)
@@ -31,11 +31,5 @@ void Service::run()
 void Service::stop()
 {
     m_running = false;
-}
-
-void Service::submit(EventConstSp event)
-{
-    std::cout << "Submit called"<< std::endl;
-    m_dispatcher->post(event);
 }
 

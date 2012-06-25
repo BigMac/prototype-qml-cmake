@@ -1,5 +1,4 @@
 #include "GuiEntryPoint.h"
-#include "InventoryGUI.h"
 #include "LocalNetworkAccessManager.h"
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
@@ -15,9 +14,6 @@ GuiEntryPoint::GuiEntryPoint()
 
 int GuiEntryPoint::exec(int argc, char *argv[], std::shared_ptr<InventoryCore> core)
 {
-    std::shared_ptr<InventoryGUI> gui = std::make_shared<InventoryGUI>();
-    gui->attachCore(core);
-
     QApplication app(argc, argv);
     QDeclarativeView view;
     view.engine()->setNetworkAccessManagerFactory(new LocalNetworkAccessManagerFactory());

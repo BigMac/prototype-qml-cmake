@@ -8,9 +8,8 @@
                     [&](std::shared_ptr<const EventType> evt) { m_fsm->process_event(*evt); });
 
 QtService::QtService(std::shared_ptr<Dispatcher> dispatcher) :
-    Service(dispatcher),
     m_eventRegistry(std::make_shared<EventRegistry>()),
-    m_fsm(new QtFsm(this))
+    m_fsm(new QtFsm(dispatcher))
 {
     REGISTER_INTERNAL_CALLBACK(GuiResourceResponse)
     REGISTER_INTERNAL_CALLBACK(OpenInterfaceWindowRequest)
