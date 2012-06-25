@@ -4,11 +4,12 @@
 #include "ConcurrentQueue.h"
 #include "events/EventRegistry.h"
 #include <boost/msm/back/state_machine.hpp>
+#include "QtServiceFsm.h"
 
-struct QtServiceFsm;
 class Dispatcher;
 class QtService :
         public Service,
+        public boost::msm::back::state_machine<QtServiceFsm>,
         public std::enable_shared_from_this<QtService>
 {
 public:
@@ -20,10 +21,14 @@ protected:
     virtual void preRun();
 
     std::shared_ptr<EventRegistry> m_eventRegistry;
-    typedef boost::msm::back::state_machine<QtServiceFsm> QtFsm;
-    std::unique_ptr<QtFsm> m_fsm;
 
 private:
+    template<typename EventType>
+    void registerInternalCallback()
+    {
+        m_eventRegistry->Record<EventType>::registerCallback( \
+                    [&](std::shared_ptr<const EventType> evt) { process_event(*evt); });
+    }
 };
 
 #endif // QTSERVICE_H

@@ -22,5 +22,6 @@ add_library(libgui
 	${MOC_SRCS}
 )
 target_link_libraries(libgui
-		${QT_LIBRARIES}
+	libevents
+	${QT_LIBRARIES}
 )

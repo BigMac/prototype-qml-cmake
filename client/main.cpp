@@ -4,7 +4,7 @@
 #include "CommonConnection.h"
 #include "messages/ResourceRequest.h"
 #include "messages/Serializer.h"
-#include "QtService.h"
+#include "gui/QtService.h"
 #include "Dispatcher.h"
 #include "events/OpenInterfaceWindowRequest.h"
 #include "events/GuiResourceResponse.h"
