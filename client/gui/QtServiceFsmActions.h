@@ -1,6 +1,13 @@
 #ifndef QTSERVICEFSMACTIONS_H
 #define QTSERVICEFSMACTIONS_H
 
+#include "events/DrawBufferRequest.h"
+#include "events/DrawBufferResponse.h"
+#include "events/DrawBufferReleased.h"
+#include "events/GuiResourceRequest.h"
+#include "events/GuiResourceResponse.h"
+#include "events/OpenInterfaceWindowRequest.h"
+
 #include <memory>
 #include <string>
 #include <iostream> // TODO remove when done with debug logging
@@ -43,15 +50,17 @@ struct StartRendering
     void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
     {
         LOG_ACTION(StartRendering)
+                fsm.renderer->prepareRender(evt.getUrl());
     }
 };
 
-struct RegisterResourceListener
+struct SupplyResource
 {
     template <class Fsm,class Evt,class SourceState,class TargetState>
-    void operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
+    void operator()(Evt const& evt, Fsm& fsm, SourceState& ss,TargetState& )
     {
-        LOG_ACTION(RegisterResourceListener)
+        LOG_ACTION(SupplyResource)
+                fsm.renderer->resourceArrived(evt.getUrl(), evt.getData());
     }
 };
 

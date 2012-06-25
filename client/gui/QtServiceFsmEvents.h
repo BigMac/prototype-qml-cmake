@@ -7,7 +7,7 @@ struct ResourceNeeded
 {
 public:
     ResourceNeeded(const std::string& url) : m_url(url) {}
-    const std::string& getUrl() { return m_url; }
+    const std::string& getUrl() const { return m_url; }
 private:
     std::string m_url;
 };

@@ -26,9 +26,9 @@ struct StatedDrawBufferRequested : public boost::msm::front::state<>
     LOG_STATE(StatedDrawBufferRequested)
 };
 
-struct StateQmlRequested : public boost::msm::front::state<>
+struct StateGuiResourceRequested : public boost::msm::front::state<>
 {
-    LOG_STATE(StateQmlRequested)
+    LOG_STATE(StateGuiResourceRequested)
     std::string requestedUrl;
 };
 

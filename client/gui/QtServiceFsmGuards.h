@@ -25,10 +25,9 @@ struct DrawBufferResponseOk
 struct GuiResourceResponseOk
 {
     template <class Fsm,class Evt,class SourceState,class TargetState>
-    bool operator()(Evt const& evt, Fsm& fsm, SourceState&,TargetState& )
+    bool operator()(Evt const& evt, Fsm&, SourceState& ss, TargetState& )
     {
-        //fsm->submit(DrawBufferRequest);
-        return true; // TEMP
+        return ss.requestedUrl == evt.getUrl();
     }
 };
 

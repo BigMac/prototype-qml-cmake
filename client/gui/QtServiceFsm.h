@@ -40,19 +40,17 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
 
     // Transition table
     struct transition_table : boost::mpl::vector<
-            Row< StateInitial, none, StateIdle, none, none >,
-            Row< StateInitial, OpenInterfaceWindowRequest, StateIdle, StartRendering, none >,
+            Row< StateInitial, none, StateIdle, none, none >
 
-            Row< StateIdle, OpenInterfaceWindowRequest, StateQmlRequested, SendGuiResourceRequest, none >,
-            Row< StateIdle, DrawBufferNeeded,   StatedDrawBufferRequested, SendDrawBufferRequest, none >,
+            ,Row< StateIdle, OpenInterfaceWindowRequest, StateRenderingQml, StartRendering, none >
+            ,Row< StateIdle, DrawBufferNeeded,   StatedDrawBufferRequested, SendDrawBufferRequest, none >
 
-            Row< StatedDrawBufferRequested, DrawBufferResponse, StateIdle, Repaint, DrawBufferResponseOk >,
-            Row< StatedDrawBufferRequested, DrawBufferResponse, StateIdle, none,    Not<DrawBufferResponseOk> >, // Need proper error handling
+            ,Row< StatedDrawBufferRequested, DrawBufferResponse, StateIdle, Repaint, DrawBufferResponseOk >
+            ,Row< StatedDrawBufferRequested, DrawBufferResponse, StateIdle, none,    Not<DrawBufferResponseOk> > // Need proper error handling
 
-            Row< StateQmlRequested, GuiResourceResponse, StateRenderingQml, StartRendering, GuiResourceResponseOk >,
-            Row< StateQmlRequested, GuiResourceResponse, StateIdle, none, Not<GuiResourceResponseOk> >, // Need proper error handling
+            ,Row< StateRenderingQml, ResourceNeeded, StateGuiResourceRequested, SendGuiResourceRequest, none >
 
-            Row< StateRenderingQml, ResourceNeeded, StateRenderingQml, Seq2<SendGuiResourceRequest, RegisterResourceListener>, none >
+            ,Row< StateGuiResourceRequested, GuiResourceResponse, StateRenderingQml, SupplyResource, GuiResourceResponseOk >
             >{};
 
     typedef StateInitial initial_state;
