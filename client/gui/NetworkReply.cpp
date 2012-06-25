@@ -1,8 +1,8 @@
-#include "FileNetworkReply.h"
+#include "NetworkReply.h"
 #include <QDebug>
 #include <QTimer>
 
-FileNetworkReply::FileNetworkReply(QUrl url,
+NetworkReply::NetworkReply(QUrl url,
                            const QNetworkRequest &request,
                            QObject *parent) :
     QNetworkReply(parent), m_file(url.toLocalFile())
@@ -19,21 +19,21 @@ FileNetworkReply::FileNetworkReply(QUrl url,
     QTimer::singleShot( 0, this, SIGNAL(finished()) );
 }
 
-void FileNetworkReply::abort()
+void NetworkReply::abort()
 {
 }
 
-qint64 FileNetworkReply::bytesAvailable() const
+qint64 NetworkReply::bytesAvailable() const
 {
     return m_file.bytesAvailable();
 }
 
-bool FileNetworkReply::isSequential() const
+bool NetworkReply::isSequential() const
 {
     return true;
 }
 
-qint64 FileNetworkReply::readData(char *data, qint64 maxSize)
+qint64 NetworkReply::readData(char *data, qint64 maxSize)
 {
     qint64 ret = m_file.read(data, maxSize);
     if (ret == 0 && bytesAvailable() == 0)

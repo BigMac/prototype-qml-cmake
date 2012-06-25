@@ -4,11 +4,11 @@
 #include <QtNetwork/QNetworkReply>
 #include <QFile>
 
-class FileNetworkReply : public QNetworkReply
+class NetworkReply : public QNetworkReply
 {
     Q_OBJECT
 public:
-    FileNetworkReply(QUrl url, const QNetworkRequest &request, QObject *parent = 0);
+    NetworkReply(QUrl url, const QNetworkRequest &request, QObject *parent = 0);
 
     void abort();
     qint64 bytesAvailable() const;

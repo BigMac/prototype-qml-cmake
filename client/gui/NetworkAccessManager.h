@@ -5,19 +5,19 @@
 #include <QDeclarativeNetworkAccessManagerFactory>
 #include <QtNetwork/QNetworkReply>
 
-class LocalNetworkAccessManager : public QNetworkAccessManager
+class NetworkAccessManager : public QNetworkAccessManager
 {
 public:
-    explicit LocalNetworkAccessManager(QObject *parent = 0);
+    explicit NetworkAccessManager(QObject *parent = 0);
 protected:
     QNetworkReply* createRequest(Operation op, const QNetworkRequest &request, QIODevice *outgoingData);
-    
+
 };
 
-class LocalNetworkAccessManagerFactory : public QDeclarativeNetworkAccessManagerFactory
+class NetworkAccessManagerFactory : public QDeclarativeNetworkAccessManagerFactory
 {
 public:
-    QNetworkAccessManager* create(QObject *parent) { return new LocalNetworkAccessManager(parent); }
+    QNetworkAccessManager* create(QObject *parent) { return new NetworkAccessManager(parent); }
 };
 
 #endif // NETWORKACCESSMANAGER_H
