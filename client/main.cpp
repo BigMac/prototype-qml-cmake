@@ -1,13 +1,13 @@
 #include "gui/GuiEntryPoint.h"
-#include "core/ClientConnection.h"
+#include "ClientConnection.h"
 #include "CommonConnectionListener.h"
 #include "CommonConnection.h"
 #include "messages/ResourceRequest.h"
 #include "messages/Serializer.h"
-#include "core/QtService.h"
-#include "core/Dispatcher.h"
-#include "core/events/OpenInterfaceWindowRequest.h"
-#include "core/events/GuiResourceResponse.h"
+#include "QtService.h"
+#include "Dispatcher.h"
+#include "events/OpenInterfaceWindowRequest.h"
+#include "events/GuiResourceResponse.h"
 
 class MockListener : public CommonConnectionListener
 {
