@@ -1,5 +1,5 @@
 #include "gui/GuiEntryPoint.h"
-#include "ClientConnection.h"
+#include "connection/ClientConnection.h"
 #include "CommonConnectionListener.h"
 #include "CommonConnection.h"
 #include "messages/ResourceRequest.h"

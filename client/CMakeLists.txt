@@ -1,4 +1,4 @@
-find_package(Boost COMPONENTS system thread REQUIRED)
+find_package(Boost COMPONENTS thread REQUIRED)
 find_package(Threads)
 file(GLOB SRCS *.cpp)
 file(GLOB HDRS *.h)
@@ -8,8 +8,10 @@ include_directories(
 	${Boost_INCLUDE_DIRS})
 add_definitions(-DBOOST_ALL_NO_LIB=1)
 
-add_subdirectory(gui)
+add_subdirectory(connection)
 add_subdirectory(events)
+add_subdirectory(gui)
+add_subdirectory(resourcerepository)
 
 add_executable(client
 	${SRCS}
@@ -17,9 +19,11 @@ add_executable(client
 )
 
 target_link_libraries(client
+	libcommon
+	libconnection
 	libevents
 	libgui
-	libcommon
+	libresourcerepository
         ${Boost_LIBRARIES}
         ${CMAKE_THREAD_LIBS_INIT}
 )
