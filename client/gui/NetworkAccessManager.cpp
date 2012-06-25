@@ -4,8 +4,11 @@
 #include <QDebug>
 #include <qglobal.h>
 
-NetworkAccessManager::NetworkAccessManager(QObject *parent) :
-    QNetworkAccessManager(parent)
+NetworkAccessManager::NetworkAccessManager(
+        IResourceHandler& resourceHandler,
+        QObject *parent) :
+    QNetworkAccessManager(parent),
+    m_resourceHandler(resourceHandler)
 {
 }
 
@@ -14,6 +17,6 @@ QNetworkReply* NetworkAccessManager::createRequest(Operation op, const QNetworkR
     qDebug() << Q_FUNC_INFO;
     QUrl url = request.url();
     url = QUrl::fromLocalFile(url.host() + url.path());
-    NetworkReply* reply(new NetworkReply(url, request));
+    NetworkReply* reply(new NetworkReply(m_resourceHandler, url, request));
     return reply;
 }

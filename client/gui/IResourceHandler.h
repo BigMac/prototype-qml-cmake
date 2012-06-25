@@ -12,6 +12,7 @@ class IResourceHandler
 public:
     virtual void resourceNeeded(const std::string& url,
                                 RequestArrivedCallback callback) = 0;
+    virtual ~IResourceHandler() {}
 };
 
 #endif // IRESOURCEHANDLER_H

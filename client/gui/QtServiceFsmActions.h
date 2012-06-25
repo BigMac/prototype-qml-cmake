@@ -64,4 +64,13 @@ struct SupplyResource
     }
 };
 
+struct Print
+{
+    template <class Fsm,class Evt,class SourceState,class TargetState>
+    void operator()(Evt const&, Fsm&, SourceState&,TargetState& )
+    {
+        std::cout << "asdgasdf" << std::endl;
+    }
+};
+
 #endif // QTSERVICEFSMACTIONS_H

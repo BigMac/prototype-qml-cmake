@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     auto dispatcher = std::make_shared<Dispatcher>();
     auto service = QtServiceFactory::create(dispatcher);
     service->post(std::make_shared<OpenInterfaceWindowRequest>("dupa://resources/qml/main.qml"));
-    //service->post(std::make_shared<GuiResourceResponse>("dupa://resources/qml/main.qml"));
+    service->post(std::make_shared<GuiResourceResponse>("resources/qml/main.qml"));
     service->run();
 
 //    auto listener = std::make_shared<MockListener>();

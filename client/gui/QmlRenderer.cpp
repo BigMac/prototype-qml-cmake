@@ -30,11 +30,13 @@ void QmlRenderer::prepareRender(const std::string& qmlUrl)
     char **argv = NULL;
     QApplication app(argc, argv);
     QDeclarativeView view;
-    view.engine()->setNetworkAccessManagerFactory(new NetworkAccessManagerFactory());
+    view.engine()->setNetworkAccessManagerFactory(new NetworkAccessManagerFactory(*this));
     view.setSource(QUrl(qmlUrl.c_str()));
     view.setVisible(true);
     view.connect(view.engine(), SIGNAL(quit()), SLOT(close()));
     std::cout << "prepareRender complete " << qmlUrl << std::endl;
+    view.show();
+    app.exec();
 }
 
 void QmlRenderer::paint(/* painting buffer pointer */)

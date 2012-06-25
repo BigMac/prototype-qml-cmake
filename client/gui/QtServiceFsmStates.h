@@ -28,7 +28,17 @@ struct StatedDrawBufferRequested : public boost::msm::front::state<>
 
 struct StateGuiResourceRequested : public boost::msm::front::state<>
 {
-    LOG_STATE(StateGuiResourceRequested)
+    template <class Event,class FSM>
+    void on_entry(Event const& evt,FSM&)
+    {
+        requestedUrl = evt.getUrl();
+        std::cout << "entering: StateGuiResourceRequested: "<< requestedUrl << std::endl;
+    }
+    template <class Event,class FSM>
+    void on_exit(Event const&,FSM& )
+    {
+        std::cout << "leaving: StateGuiResourceRequested"<< std::endl;
+    }
     std::string requestedUrl;
 };
 

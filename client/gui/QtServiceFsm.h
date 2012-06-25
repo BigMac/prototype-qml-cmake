@@ -51,6 +51,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
             ,Row< StateRenderingQml, ResourceNeeded, StateGuiResourceRequested, SendGuiResourceRequest, none >
 
             ,Row< StateGuiResourceRequested, GuiResourceResponse, StateRenderingQml, SupplyResource, GuiResourceResponseOk >
+            ,Row< StateGuiResourceRequested, GuiResourceResponse, StateGuiResourceRequested, Print, Not<GuiResourceResponseOk> >
             >{};
 
     typedef StateInitial initial_state;
