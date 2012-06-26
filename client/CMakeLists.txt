@@ -1,12 +1,17 @@
 find_package(Boost COMPONENTS thread REQUIRED)
 find_package(Threads)
+find_package(Qt4 COMPONENTS QTCORE QTGUI QTDECLARATIVE REQUIRED)
+
+include(${QT_USE_FILE})
+
 file(GLOB SRCS *.cpp)
 file(GLOB HDRS *.h)
 
 include_directories(
 	.
 	../common
-        ${Boost_INCLUDE_DIRS})
+	${Boost_INCLUDE_DIRS}
+	${QT_INCLUDE_DIR})
 add_definitions(-DBOOST_ALL_NO_LIB=1)
 
 add_subdirectory(connection)
@@ -25,7 +30,8 @@ target_link_libraries(client
 	libevents
 	libgui
 	libresourcerepository
-        ${Boost_LIBRARIES}
-        ${CMAKE_THREAD_LIBS_INIT}
+	${Boost_LIBRARIES}
+	${CMAKE_THREAD_LIBS_INIT}
+	${QT_LIBRARIES}
 )
 

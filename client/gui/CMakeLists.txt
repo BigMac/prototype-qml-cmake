@@ -11,6 +11,7 @@ file(GLOB HDRS *.h)
 
 set(MOC_HDRS
 	NetworkReply.h
+	ViewLoadedListener.h
 )
 
 qt4_wrap_cpp(MOC_SRCS ${MOC_HDRS})

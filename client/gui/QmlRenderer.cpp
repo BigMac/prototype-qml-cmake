@@ -2,20 +2,30 @@
 #include "QtService.h"
 #include "QtServiceFsmEvents.h"
 #include "NetworkAccessManager.h"
+#include "ViewLoadedListener.h"
 #include <QDeclarativeEngine>
 #include <QDeclarativeComponent>
 #include <QDeclarativeContext>
 #include <QDeclarativeView>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QApplication>
+#include <QThread>
 #include <sstream>
 #include <stdexcept>
 
 // TODO remove when done with print debugging
 #include <iostream>
 
-QmlRenderer::QmlRenderer()
+QmlRenderer::QmlRenderer(int &argc, char **&argv)
 {
+    m_app = std::make_shared<QApplication>(argc, argv);
+    m_view = std::make_shared<QDeclarativeView>();
+    m_view->engine()->setNetworkAccessManagerFactory(new NetworkAccessManagerFactory(*this));
+    m_listener = std::make_shared<ViewLoadedListener>([&](){ allResourcesLoaded(); });
+    QDeclarativeView* view = m_view.get();
+    ViewLoadedListener* listener = m_listener.get();
+    QObject::connect(view, SIGNAL(statusChanged(QDeclarativeView::Status)),
+                     listener, SLOT(statusChanged(QDeclarativeView::Status)));
 }
 
 void QmlRenderer::setService(std::weak_ptr<QtService> service)
@@ -25,18 +35,16 @@ void QmlRenderer::setService(std::weak_ptr<QtService> service)
 
 void QmlRenderer::prepareRender(const std::string& qmlUrl)
 {
+    m_view->moveToThread(QThread::currentThread());
     // All this is temporary
-    int argc = 1;
-    char **argv = NULL;
-    QApplication app(argc, argv);
-    QDeclarativeView view;
-    view.engine()->setNetworkAccessManagerFactory(new NetworkAccessManagerFactory(*this));
-    view.setSource(QUrl(qmlUrl.c_str()));
-    view.setVisible(true);
-    view.connect(view.engine(), SIGNAL(quit()), SLOT(close()));
+    m_view->setSource(QUrl(qmlUrl.c_str()));
+    //view.setVisible(true);
+    //view.connect(view.engine(), SIGNAL(quit()), SLOT(close()));
+    m_view->show();
     std::cout << "prepareRender complete " << qmlUrl << std::endl;
-    view.show();
-    app.exec();
+    //m_view->show();
+//    view.show();
+//    app.exec();
 }
 
 void QmlRenderer::paint(/* painting buffer pointer */)
@@ -44,6 +52,9 @@ void QmlRenderer::paint(/* painting buffer pointer */)
 
 }
 
+void QmlRenderer::allResourcesLoaded()
+{
+}
 
 void QmlRenderer::resourceNeeded(const std::string& url,
                             RequestArrivedCallback callback)

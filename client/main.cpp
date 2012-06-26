@@ -9,6 +9,7 @@
 #include "Dispatcher.h"
 #include "events/OpenInterfaceWindowRequest.h"
 #include "events/GuiResourceResponse.h"
+#include <QApplication>
 
 class MockListener : public CommonConnectionListener
 {
@@ -36,11 +37,11 @@ public:
 int main(int argc, char *argv[])
 {
     auto dispatcher = std::make_shared<Dispatcher>();
-    auto service = QtServiceFactory::create(dispatcher);
+    auto service = QtServiceFactory::create(dispatcher, argc, argv);
     service->post(std::make_shared<OpenInterfaceWindowRequest>("dupa://resources/qml/main.qml"));
     service->post(std::make_shared<GuiResourceResponse>("resources/qml/main.qml"));
     service->run();
-
+    service->join();
 //    auto listener = std::make_shared<MockListener>();
 //    ClientConnection connection;
 //    connection.connectToServer("127.0.0.1", listener);
