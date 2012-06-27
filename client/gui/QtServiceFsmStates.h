@@ -35,6 +35,7 @@ struct StateGuiResourceRequested : public boost::msm::front::state<>
         requestedUrl = evt.getUrl();
         std::cout << "entering: StateGuiResourceRequested: "<< requestedUrl << std::endl;
         fsm.dispatcher->post(std::make_shared<GuiResourceResponse>(requestedUrl));
+        std::cout << "GuiResourceResponse sent" << std::endl;
     }
     template <class Event,class FSM>
     void on_exit(Event const&,FSM& )

@@ -17,9 +17,8 @@
 // TODO remove when done with print debugging
 #include <iostream>
 
-QmlRenderer::QmlRenderer(int &argc, char **&argv)
+QmlRenderer::QmlRenderer()
 {
-    //m_app = std::make_shared<QApplication>(argc, argv);
     m_view = std::make_shared<ThreadSafeDeclarativeView>();
     m_view->engine()->setNetworkAccessManagerFactory(new NetworkAccessManagerFactory(*this));
     m_listener = std::make_shared<ViewLoadedListener>([&](){ allResourcesLoaded(); });
@@ -36,20 +35,13 @@ void QmlRenderer::setService(std::weak_ptr<QtService> service)
 
 void QmlRenderer::prepareRender(const std::string& qmlUrl)
 {
-    // All this is temporary
     bool success = QMetaObject::invokeMethod(m_view.get(),
                                              "loadResources",
                                              Qt::AutoConnection,
                                              Q_ARG(QUrl, QUrl(qmlUrl.c_str()))
                                              );
-    //m_view->setSource(QUrl(qmlUrl.c_str()));
-    //view.setVisible(true);
-    //view.connect(view.engine(), SIGNAL(quit()), SLOT(close()));
-    //m_view->show();
     std::cout << "prepareRender complete " << qmlUrl << " status " << success << std::endl;
-    //m_view->show();
-//    view.show();
-//    app.exec();
+
 }
 
 void QmlRenderer::paint(/* painting buffer pointer */)

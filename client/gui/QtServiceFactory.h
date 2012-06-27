@@ -8,9 +8,7 @@ class QtServiceFactory
 {
 public:
     static std::shared_ptr<QtService> create(
-            std::shared_ptr<Dispatcher> dispatcher,
-            int& argc,
-            char**& argv);
+            std::shared_ptr<Dispatcher> dispatcher);
 };
 
 #endif // QTSERVICEFACTORY_H

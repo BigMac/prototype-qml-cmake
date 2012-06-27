@@ -12,7 +12,9 @@ ViewLoadedListener::ViewLoadedListener(
 
 void ViewLoadedListener::statusChanged(QDeclarativeView::Status status)
 {
-    std::cout << "ViewLoadedListener::statusChanged" << std::endl;
+    std::cout << "ViewLoadedListener::statusChanged " << status << std::endl;
     if(status == QDeclarativeView::Ready)
+    {
         m_callback();
+    }
 }

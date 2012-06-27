@@ -3,12 +3,9 @@
 #include "QmlRenderer.h"
 
 // static
-std::shared_ptr<QtService> QtServiceFactory::create(
-        std::shared_ptr<Dispatcher> dispatcher,
-        int &argc,
-        char **&argv)
+std::shared_ptr<QtService> QtServiceFactory::create(std::shared_ptr<Dispatcher> dispatcher)
 {
-    auto renderer = std::make_shared<QmlRenderer>(argc, argv);
+    auto renderer = std::make_shared<QmlRenderer>();
     auto service = std::make_shared<QtService>(dispatcher, renderer);
     renderer->setService(service);
     service->registerReceivedEventTypes(dispatcher);

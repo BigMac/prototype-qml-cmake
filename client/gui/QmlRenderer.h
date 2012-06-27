@@ -6,13 +6,12 @@
 #include <map>
 
 class QtService;
-class QApplication;
 class ThreadSafeDeclarativeView;
 class ViewLoadedListener;
 class QmlRenderer : public IResourceHandler
 {
 public:
-    QmlRenderer(int& argc, char**& argv);
+    QmlRenderer();
     void setService(std::weak_ptr<QtService> service);
     void prepareRender(const std::string& qmlUrl);
     void paint(/* painting buffer pointer */);
@@ -26,7 +25,6 @@ protected:
     typedef std::map<std::string, RequestArrivedCallback> CallbacksMap;
     CallbacksMap m_callbacks;
 
-    std::shared_ptr<QApplication> m_app;
     std::shared_ptr<ThreadSafeDeclarativeView> m_view;
     std::shared_ptr<ViewLoadedListener> m_listener;
 };

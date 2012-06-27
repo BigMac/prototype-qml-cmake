@@ -29,7 +29,7 @@ public:
 protected:
     typedef std::vector<std::shared_ptr<T> > Queue;
     Queue m_queue;
-    boost::mutex m_queueMutex;
+    boost::recursive_mutex m_queueMutex;
 };
 
 #endif // CONCURRENTQUEUE_H

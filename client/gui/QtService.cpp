@@ -24,6 +24,7 @@ void QtService::registerReceivedEventTypes(std::shared_ptr<Dispatcher> dispatche
 
 uint32_t QtService::handleEvent(EventConstSp event)
 {
+    std::cout << "QtService::handleEvent" << std::endl;
     event->executeCallbacks(m_eventRegistry);
     return 10;
 }
