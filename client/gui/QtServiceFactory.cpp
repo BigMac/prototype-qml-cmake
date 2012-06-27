@@ -11,5 +11,6 @@ std::shared_ptr<QtService> QtServiceFactory::create(
     auto renderer = std::make_shared<QmlRenderer>(argc, argv);
     auto service = std::make_shared<QtService>(dispatcher, renderer);
     renderer->setService(service);
+    service->registerReceivedEventTypes(dispatcher);
     return service;
 }

@@ -7,7 +7,7 @@
 
 class QtService;
 class QApplication;
-class QDeclarativeView;
+class ThreadSafeDeclarativeView;
 class ViewLoadedListener;
 class QmlRenderer : public IResourceHandler
 {
@@ -27,7 +27,7 @@ protected:
     CallbacksMap m_callbacks;
 
     std::shared_ptr<QApplication> m_app;
-    std::shared_ptr<QDeclarativeView> m_view;
+    std::shared_ptr<ThreadSafeDeclarativeView> m_view;
     std::shared_ptr<ViewLoadedListener> m_listener;
 };
 

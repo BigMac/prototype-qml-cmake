@@ -11,6 +11,7 @@ file(GLOB HDRS *.h)
 
 set(MOC_HDRS
 	NetworkReply.h
+	ThreadSafeDeclarativeView.h
 	ViewLoadedListener.h
 )
 

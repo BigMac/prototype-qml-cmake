@@ -36,11 +36,13 @@ public:
 
 int main(int argc, char *argv[])
 {
+    QApplication app(argc, argv);
     auto dispatcher = std::make_shared<Dispatcher>();
     auto service = QtServiceFactory::create(dispatcher, argc, argv);
     service->post(std::make_shared<OpenInterfaceWindowRequest>("dupa://resources/qml/main.qml"));
-    service->post(std::make_shared<GuiResourceResponse>("resources/qml/main.qml"));
+    //service->post(std::make_shared<GuiResourceResponse>("resources/qml/main.qml"));
     service->run();
+    app.exec();
     service->join();
 //    auto listener = std::make_shared<MockListener>();
 //    ClientConnection connection;

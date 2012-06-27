@@ -3,6 +3,7 @@
 
 #include <iostream> // TODO remove when done with debug logging
 #include <string>
+#include "events/GuiResourceResponse.h" // TEMP
 
 #define LOG_STATE(State) \
     template <class Event,class FSM> \
@@ -29,10 +30,11 @@ struct StatedDrawBufferRequested : public boost::msm::front::state<>
 struct StateGuiResourceRequested : public boost::msm::front::state<>
 {
     template <class Event,class FSM>
-    void on_entry(Event const& evt,FSM&)
+    void on_entry(Event const& evt, FSM& fsm)
     {
         requestedUrl = evt.getUrl();
         std::cout << "entering: StateGuiResourceRequested: "<< requestedUrl << std::endl;
+        fsm.dispatcher->post(std::make_shared<GuiResourceResponse>(requestedUrl));
     }
     template <class Event,class FSM>
     void on_exit(Event const&,FSM& )
