@@ -9,6 +9,7 @@ class IService
 public:
     virtual void post(std::shared_ptr<const Event> event) = 0;
     virtual void run() = 0;
+    virtual void join() = 0;
     virtual void registerReceivedEventTypes(std::shared_ptr<Dispatcher> dispatcher) = 0;
 };
 
