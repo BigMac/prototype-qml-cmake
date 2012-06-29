@@ -40,7 +40,7 @@ struct QtServiceFsm : public boost::msm::front::state_machine_def<QtServiceFsm>
 
     // Transition table
     struct transition_table : boost::mpl::vector<
-            Row< StateInitial, none, StateIdle, none, none >
+            Row< StateInitial, none, StateIdle, InitializeQmlRenderer, none >
 
             ,Row< StateIdle, OpenInterfaceWindowRequest, StateRenderingQml, StartRendering, none >
             ,Row< StateIdle, DrawBufferNeeded,   StatedDrawBufferRequested, SendDrawBufferRequest, none >

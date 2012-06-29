@@ -16,6 +16,17 @@
     std::cout << "Action: " << #Action << std::endl;
 
 // Actions
+
+struct InitializeQmlRenderer
+{
+    template <class Fsm,class Evt,class SourceState,class TargetState>
+    void operator()(Evt const&, Fsm& fsm, SourceState&,TargetState& )
+    {
+        LOG_ACTION(InitializeQmlRenderer)
+        fsm.renderer->initialize();
+    }
+};
+
 struct SendGuiResourceRequest
 {
     template <class Fsm,class Evt,class SourceState,class TargetState>

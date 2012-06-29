@@ -21,16 +21,22 @@ QmlRenderer::QmlRenderer()
 {
     m_view = std::make_shared<ThreadSafeDeclarativeView>();
     m_view->engine()->setNetworkAccessManagerFactory(new NetworkAccessManagerFactory(*this));
-    m_listener = std::make_shared<ViewLoadedListener>([&](){ allResourcesLoaded(); });
-    QDeclarativeView* view = m_view.get();
-    ViewLoadedListener* listener = m_listener.get();
-    QObject::connect(view, SIGNAL(statusChanged(QDeclarativeView::Status)),
-                     listener, SLOT(statusChanged(QDeclarativeView::Status)));
+
 }
 
 void QmlRenderer::setService(std::weak_ptr<QtService> service)
 {
     m_service = service;
+}
+
+void QmlRenderer::initialize()
+{
+    m_listener = std::make_shared<ViewLoadedListener>([&](){ allResourcesLoaded(); });
+    QDeclarativeView* view = m_view.get();
+    ViewLoadedListener* listener = m_listener.get();
+    QObject::connect(view, SIGNAL(statusChanged(QDeclarativeView::Status)),
+                     listener, SLOT(statusChanged(QDeclarativeView::Status)));
+    qRegisterMetaType<QDeclarativeView::Status>("QDeclarativeView::Status");
 }
 
 void QmlRenderer::prepareRender(const std::string& qmlUrl)

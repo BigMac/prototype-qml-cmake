@@ -11,7 +11,8 @@ class ViewLoadedListener;
 class QmlRenderer : public IResourceHandler
 {
 public:
-    QmlRenderer();
+    QmlRenderer(); // Needs to be called from main thread (Qt...)
+    void initialize(); // Needs to be called from service's thread
     void setService(std::weak_ptr<QtService> service);
     void prepareRender(const std::string& qmlUrl);
     void paint(/* painting buffer pointer */);
