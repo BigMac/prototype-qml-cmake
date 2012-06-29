@@ -3,7 +3,6 @@
 #include "Service.h"
 #include "ConcurrentQueue.h"
 #include "events/EventRegistry.h"
-#include "events/EventRegistryEntry.h"
 #include <boost/msm/back/state_machine.hpp>
 #include "QtServiceFsm.h"
 
@@ -24,13 +23,12 @@ protected:
     virtual void preRun();
 
     std::shared_ptr<EventRegistry> m_eventRegistry;
-    std::vector<EventRegistryEntry> m_registryEntries;
 
 private:
     template<typename EventType>
     void registerInternalCallback()
     {
-        m_eventRegistry->Record<EventType>::registerCallback(
+        m_eventRegistry->Record<EventType>::registerCallback( \
                     [&](std::shared_ptr<const EventType> evt) { process_event(*evt); });
     }
 };
