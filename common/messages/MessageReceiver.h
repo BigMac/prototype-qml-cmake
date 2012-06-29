@@ -7,18 +7,25 @@
 /* Sadly, this cannot be done by multiple inheritance because name resolution is
  * done before overload resolution and we get amiguity. We need all these overloads
  * to be in MessageReceiver. */
-#define RECEIVES(Message_t) \
-virtual void receive(Message_t&) { throw UnsupportedMessageReceived<Message_t>(); }
+template<typename Message_t>
+class ConcreteReceiver
+{
+public:
+    virtual void receive(Message_t&) { throw UnsupportedMessageReceived<Message_t>(); }
+};
+
 
 
 class ResourceRequest;
 class ResourceResponse;
 
-class MessageReceiver
+class MessageReceiver :
+        public ConcreteReceiver<ResourceRequest>,
+        public ConcreteReceiver<ResourceResponse>
 {
 public:
-    RECEIVES(ResourceRequest)
-    RECEIVES(ResourceResponse)
+    using ConcreteReceiver<ResourceRequest>::receive;
+    using ConcreteReceiver<ResourceResponse>::receive;
 };
 
 #endif // MESSAGERECEIVER_H
