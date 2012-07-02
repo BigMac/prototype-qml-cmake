@@ -11,11 +11,6 @@ QtService::QtService(std::shared_ptr<Dispatcher> dispatcher,
     registerInternalCallback<OpenInterfaceWindowRequest>();
 }
 
-QtService::~QtService()
-{
-    // Empty implementation needed so that std::unique_ptr has complete type
-}
-
 void QtService::registerReceivedEventTypes(std::shared_ptr<Dispatcher> dispatcher)
 {
     dispatcher->registerReceiver<GuiResourceResponse>(*this);

@@ -1,20 +1,19 @@
-#ifndef QTSERVICE_H
-#define QTSERVICE_H
+#ifndef RESOURCEREPOSITORYSERVICE_H
+#define RESOURCEREPOSITORYSERVICE_H
 #include "Service.h"
 #include "events/EventRegistry.h"
 #include <boost/msm/back/state_machine.hpp>
-#include "QtServiceFsm.h"
+#include "ResourceRepositoryFsm.h"
 
-class QmlRenderer;
 class Dispatcher;
-class QtService :
+
+class ResourceRepositoryService :
         public Service,
-        public boost::msm::back::state_machine<QtServiceFsm>,
-        public std::enable_shared_from_this<QtService>
+        public boost::msm::back::state_machine<ResourceRepositoryFsm>,
+        public std::enable_shared_from_this<ResourceRepositoryService>
 {
 public:
-    QtService(std::shared_ptr<Dispatcher> dispatcher,
-              std::shared_ptr<QmlRenderer> renderer);
+    ResourceRepositoryService(std::shared_ptr<Dispatcher> dispatcher);
 
     virtual void registerReceivedEventTypes(std::shared_ptr<Dispatcher> dispatcher);
 protected:
@@ -32,4 +31,4 @@ private:
     }
 };
 
-#endif // QTSERVICE_H
+#endif // RESOURCEREPOSITORYSERVICE_H

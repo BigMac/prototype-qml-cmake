@@ -1,5 +1,4 @@
-#ifndef RESOURCEREQUEST_H
-#define RESOURCEREQUEST_H
+#pragma once
 #include "Message.h"
 #include <string>
 #include <boost/serialization/string.hpp>
@@ -24,4 +23,3 @@ private:
     std::string m_url;
 };
 
-#endif // RESOURCEREQUEST_H
